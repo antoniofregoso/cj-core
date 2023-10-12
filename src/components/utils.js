@@ -1,4 +1,9 @@
 
+/**
+ * slugifies a phrase to be used within a url
+ * @param {string} input 
+ * @returns {string} 
+ */
 export function slugify(input) {
     if (!input)
         return '';

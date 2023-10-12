@@ -1,3 +1,7 @@
+
+/**
+ * Activate Animate.css animations when scrolling the page
+ */
 export function whithAnimations(){
     let objs = document.querySelectorAll('[data-animation]')
     let options = { threshold: 0.1}   
@@ -19,6 +23,10 @@ export function whithAnimations(){
     })
 }
 
+/**
+ * 
+ * @param {string} el - The ID of the element for which the animation is enabled
+ */
 function setupAnimation(el){
     var animation =' animate__animated animate__'.concat(el.getAttribute('data-animation'))
     if (el.hasAttribute('data-delay')){
@@ -34,6 +42,10 @@ function setupAnimation(el){
     
 }
 
+/**
+ * Gets the browser language with a length of 2 characters
+ * @returns {string}
+ */
 export function getLang(){
     if (navigator.languages != undefined) 
       return navigator.languages[0].substring(0,2)
