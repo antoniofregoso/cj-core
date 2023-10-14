@@ -1,5 +1,8 @@
 import { FunnelElement } from "./FunnelElement";
 
+/**
+ * 
+ */
 export class FunnelPage extends FunnelElement {
 
     #default = {
@@ -7,6 +10,10 @@ export class FunnelPage extends FunnelElement {
     };
     components = [];
 
+    /**
+     * 
+     * @param {*} props 
+     */
     constructor(props){
         super();
         this.state =this.initState(this.#default,props);
@@ -18,6 +25,9 @@ export class FunnelPage extends FunnelElement {
         }
     }
 
+    /**
+     * 
+     */
     setCache(){
       let head = document.getElementsByTagName('head')[0];
       let cacheControl = document.createElement('meta');
@@ -34,6 +44,9 @@ export class FunnelPage extends FunnelElement {
       head.appendChild(expires);
     }
 
+    /**
+     * 
+     */
     setSEO(){
       let head = document.getElementsByTagName('head')[0];
       if (document.title!=undefined){
@@ -82,13 +95,21 @@ export class FunnelPage extends FunnelElement {
       }
     }
 
+    /**
+     * 
+     */
     setStyles(){
       if (this.state.classList.length > 0){
         document.body.classList.add(...this.state.classList);
       }
     }
    
-
+    /**
+     * 
+     * @param {*} props 
+     * @param {*} context 
+     * @returns 
+     */
     setContext(props,context={}){
         if (props!=undefined){
           props.context = context;
@@ -96,12 +117,22 @@ export class FunnelPage extends FunnelElement {
         return props;
     }
 
+    /**
+     * 
+     * @returns 
+     */
     getLang(){
       if (navigator.languages != undefined) 
         return navigator.languages[0].substring(0,2)
       return navigator.language.substring(0,2)
   }
 
+    /**
+     * 
+     * @param {*} previousState 
+     * @param {*} currentState 
+     * @returns 
+     */
     diffState(previousState, currentState) {
         const diff = {};
         
@@ -120,7 +151,10 @@ export class FunnelPage extends FunnelElement {
         return diff;
       }
 
-
+      /**
+       * 
+       * @param  {...any} components 
+       */
     componentsAdd(...components){   
       this.components = this.components.concat(components);
       document.querySelector('#app').appendChild(this);
@@ -130,7 +164,9 @@ export class FunnelPage extends FunnelElement {
       }
     }
 
-
+    /**
+     * 
+     */
     #appendChilds(){
         this.components.forEach(el=>{            
             this.appendChild(el)
@@ -138,7 +174,9 @@ export class FunnelPage extends FunnelElement {
     }
 
 
-
+    /**
+     * 
+     */
     render(){
         this.#appendChilds() 
     }
