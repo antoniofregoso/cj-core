@@ -1,13 +1,9 @@
-/**
- * Basic web component to create funnel networks in the buyer's journey
- * Define json
- * @typedef {string} json
- */
+
 export class FunnelElement extends HTMLElement {
     #default = {};
     /**
      * 
-     * @param {json} props Attributes necessary to render the HTML element
+     * @param {Object} props Attributes necessary to render the HTML element
      */
     constructor(props={}){
         super()
@@ -17,8 +13,8 @@ export class FunnelElement extends HTMLElement {
 
     /**
      * 
-     * @param {json} defValues Default values
-     * @param {json} props Values to be applied in the rendering
+     * @param {Object} defValues Default values
+     * @param {Object} props Values to be applied in the rendering
      * @returns 
      */
     initState(defValues, props){
@@ -61,7 +57,7 @@ export class FunnelElement extends HTMLElement {
 
     /**
      * 
-     * @param {json} props Attributes and properties to render the component
+     * @param {Object} props Attributes and properties to render the component
      */
     setState(props){
         this.state =this.initState(this.#default,props);
@@ -71,7 +67,7 @@ export class FunnelElement extends HTMLElement {
     /**
      * Update state and render the component
      * 
-     * @param {json} props Attributes and properties to update the component
+     * @param {Object} props Attributes and properties to update the component
      */
     updateState(props){
         this.state = this.initState(this.state, props)
@@ -81,7 +77,7 @@ export class FunnelElement extends HTMLElement {
     /**
      * Generate data attributes to generate component animations
      * 
-     * @param {json} props Attributes to define animation
+     * @param {Object} props Attributes to define animation
      *  @param {string} props.animation Animation name
      *  @param {string} props.delay 2s, 3s, 4s or 5s
      *  @param {string} props.speed slower, slow, fast or faster. Default 1s
