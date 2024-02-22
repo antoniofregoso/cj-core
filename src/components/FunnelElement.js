@@ -144,7 +144,7 @@ export class FunnelElement extends HTMLElement {
         if(props!=undefined){
             let buttons = '';
             props.forEach(el=>{
-                buttons += `<button id="${el.id}" ${this.getClasses(['button'], el.classList)}>${el?.text[this.state.context.lang]}</button>`;
+                buttons += `<${el.href!=undefined?'a':'button'} id="${el.id}" ${this.getClasses(['button'], el.classList)} ${el.href!=undefined?`href="${el.href}"`:''}>${el?.text[this.state.context.lang]}</${el.href!=undefined?'a':'button'}>`;
             })
             return buttons;
         }else return ''
