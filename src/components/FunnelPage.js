@@ -14,15 +14,16 @@ export class FunnelPage extends FunnelElement {
      * 
      * @param {*} props 
      */
-    constructor(props){
+    constructor(props, template=null){
         super();
         this.state =this.initState(this.#default,props);
-        this.setAttribute("id",this.state.id||`component-${Math.floor(Math.random() * 100)}`);
-        this.setSEO();
+        this.getAttribute("id")||this.setAttribute("id",this.state.id||`component-${Math.floor(Math.random() * 100)}`);
         this.setStyles();
+        this.template = template;
         if (this.state.noCache===true){
           this.setCache();
         }
+        this.viewedElement = new CustomEvent( this.state.viewedEvent===undefined?"viewedElement":this.state.viewedEvent);
     }
 
     /**
@@ -42,57 +43,6 @@ export class FunnelPage extends FunnelElement {
       expires.name = "Expires";
       expires.content = "0";
       head.appendChild(expires);
-    }
-
-    /**
-     * 
-     */
-    setSEO(){
-      let head = document.getElementsByTagName('head')[0];
-      if (document.title!=undefined){
-        document.title = this.state.title[this.state.context.lang]
-        let description = document.querySelector("meta[name=description]")
-        if (description===null){
-          let meta = document.createElement('meta');
-          meta.name = "description";
-          meta.content = this.state.description[this.state.context.lang];
-          head.appendChild(meta);
-        }else {
-          description.content = this.state.description[this.state.context.lang];
-        }
-        let metaTitle = document.createElement('meta');
-        metaTitle.setAttribute('property', 'og:title')
-        metaTitle.content = this.state.title[this.state.context.lang]
-        head.appendChild(metaTitle);
-        let metaDescription = document.createElement('meta');
-        metaDescription.setAttribute('property', 'og:description')
-        metaDescription.content = this.state.description[this.state.context.lang];
-        head.appendChild(metaDescription);
-        let metaType = document.createElement('meta');
-        metaType.setAttribute('property', 'og:type')
-        metaType.content = this.state.type;
-        head.appendChild(metaType);
-        let metaImage = document.createElement('meta');
-        metaImage.setAttribute('property', 'og:image')
-        metaImage.content = this.state.image;
-        head.appendChild(metaImage);
-        let twitterCard = document.createElement('meta');
-        twitterCard.name = "twitter:card";
-        twitterCard.content = "summary_large_image";
-        head.appendChild(twitterCard);
-        let twitterTitle = document.createElement('meta');
-        twitterTitle.name = "twitter:title";
-        twitterTitle.content = this.state.title[this.state.context.lang];
-        head.appendChild(twitterTitle);
-        let twitterDescription = document.createElement('meta');
-        twitterDescription.name = "twitter:description";
-        twitterDescription.content = this.state.title[this.state.context.lang];
-        head.appendChild(twitterDescription);
-        let twitterImage = document.createElement('meta');
-        twitterImage.name = "twitter:image";
-        twitterImage.content = this.state.image;
-        head.appendChild(twitterImage);
-      }
     }
 
     /**
@@ -127,6 +77,28 @@ export class FunnelPage extends FunnelElement {
       return navigator.language.substring(0,2)
   }
 
+  loadData(props, context){
+    for (var component of this.children){
+      component.updateState(this.setContext(props[component.id], context))
+    }
+  }
+
+    /**
+     * 
+     * @param {*} el 
+     * @returns 
+     */
+    isInViewport(el) {
+      const rect = el.getBoundingClientRect();
+      return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+
+      );
+    }
+
     /**
      * 
      * @param {*} previousState 
@@ -157,28 +129,24 @@ export class FunnelPage extends FunnelElement {
        */
     componentsAdd(...components){   
       this.components = this.components.concat(components);
-      document.querySelector('#app').appendChild(this);
-      let loading = document.querySelector('.pageloader');
-      if (loading!=null){
-        loading.classList.remove('is-active');
-      }
+      document.querySelector('#app').appendChild(this);      
     }
-
-    /**
-     * 
-     */
-    #appendChilds(){
-        this.components.forEach(el=>{            
-            this.appendChild(el)
-        })
-    }
-
 
     /**
      * 
      */
     render(){
-        this.#appendChilds() 
+      if (this.template===null){
+        this.components.forEach(el=>{            
+          this.appendChild(el)
+      })
+      }else{
+        this.innerHTML = this.template;
+      }        
+      let loading = document.querySelector('.pageloader');
+      if (loading!=null){
+        loading.classList.remove('is-active');
+      }       
     }
        
 }

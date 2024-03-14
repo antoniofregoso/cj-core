@@ -52,9 +52,17 @@ export function getLang(){
     return navigator.language.substring(0,2)
 }
 
+/**
+ * 
+ * @param {object} props 
+ *  @param {string}  [props.color='is-white'] - options: is-black, is-light, is-dark, .
+ *  @param {string}  [props.direction='is-top-to-bottom'] - "is-bottom-to-top", "is-right-to-left", "is-left-to-right, is-primary, is-link, is-info, is-success, is-warning, is-danger"
+ *  @param {string}  [props.message='Loading...'] - The message presented in the Page Loader
+ */
 export function loading(props){
+    if (props === undefined) {props={}}
     let directions = ["is-bottom-to-top", "is-right-to-left", "is-left-to-right"];
     let dir = directions.find(el=>el==props.direction)
-    document.body.innerHTML += `<div class="pageloader ${props?.color!=undefined?props.color:`is-light`} ${dir!=undefined?dir:''} is-active"><span class="title">Pageloader</span></div>`;
+    document.body.innerHTML += `<div class="pageloader ${props?.color!=undefined?props.color:`is-light`} ${dir!=undefined?dir:''} is-active"><span class="title">${props.message!=undefined?props.message:'Loading...'}</span></div>`;
 }
 
