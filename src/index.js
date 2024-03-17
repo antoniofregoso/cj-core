@@ -9,3 +9,4 @@ export * from './components/google';
 export * from './components/schema';
 export * from './components/linkedin';
 export * from './components/pinterest';
+export * from './components/x';

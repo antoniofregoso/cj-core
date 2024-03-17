@@ -1,7 +1,7 @@
 
 /**
  * slugifies a phrase to be used within a url
- * @param {string} input 
+ * @param {string} input - URL without slugify
  * @returns {string} 
  */
 export function slugify(input) {

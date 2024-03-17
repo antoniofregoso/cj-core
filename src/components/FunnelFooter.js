@@ -1,5 +1,8 @@
 import { FunnelElement } from "./FunnelElement";
 
+/**
+ * Funnel Page Footer
+ */
 export class FunnelFooter extends FunnelElement {
 
     #default = {}

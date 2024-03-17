@@ -1,5 +1,8 @@
 import { FunnelElement } from "./FunnelElement";
 
+/**
+ * Funnel Page Footer
+ */
 export class FunnelHeader extends FunnelElement {
 
     #default = {brandSrc:"https://bulma.io/images/bulma-logo.png"};

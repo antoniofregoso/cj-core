@@ -1,3 +1,8 @@
+/**
+ * Create the Linkedin pixel script and add it to the head
+ * 
+ * @param {String} tagId - LinkedIn  Insight Tag Id
+ */
 export function withLinkedinInsightTag(tagId){
     let script = document.createElement('script');
     script.innerHTML = `

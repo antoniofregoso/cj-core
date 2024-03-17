@@ -1,3 +1,8 @@
+/**
+ * Create the Pinterest pixel script and add it to the head
+ * 
+ * @param {*} tagId - Pinterest Tag Id
+ */
 export function withPinterestTag(tagId){
     let script = document.createElement('script');
     script.innerHTML = `

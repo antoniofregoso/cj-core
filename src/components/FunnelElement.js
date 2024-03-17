@@ -1,4 +1,6 @@
-
+/**
+ * Core element for creating funnel components
+ */
 export class FunnelElement extends HTMLElement {
     #default = {};
     /**

@@ -1,3 +1,8 @@
+/**
+ * Create the Goole Analytics script and add it to the head
+ * 
+ * @param {String} tagId - Googl G-4 Tag Id
+ */
 export function withGoogleAnalytics(tagId){
     let script = document.createElement('script');
     script.async = true;

@@ -1,3 +1,8 @@
+/**
+ * Create the Facebook pixel script and add it to the head
+ * 
+ * @param {String} pixelId - Facebook Pixel Id
+ */
 export function withFacebookPixel(pixelId){
     let script = document.createElement('script');
     script.innerHTML = `
