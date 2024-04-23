@@ -1,9 +1,9 @@
-import { FunnelElement } from "./FunnelElement";
+import { AppElement } from "./AppElement";
 
 /**
  * Funnel Page Footer
  */
-export class FunnelFooter extends FunnelElement {
+export class PageFooter extends AppElement {
 
     #default = {}
 
@@ -30,4 +30,4 @@ export class FunnelFooter extends FunnelElement {
 }
 
 
-customElements.define("funnel-footer", FunnelFooter)
+customElements.define("page-footer", PageFooter)

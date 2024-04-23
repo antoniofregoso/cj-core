@@ -1,9 +1,9 @@
-import { FunnelElement } from "./FunnelElement";
+import { AppElement } from "./AppElement";
 
 /**
  * Funnel Page Footer
  */
-export class FunnelHeader extends FunnelElement {
+export class PageHeader extends AppElement {
 
     #default = {brandSrc:"https://bulma.io/images/bulma-logo.png"};
 
@@ -11,7 +11,7 @@ export class FunnelHeader extends FunnelElement {
         super();
         this.state =this.initState(this.#default,props);
         this.getAttribute("id")||this.setAttribute("id",this.state.id||`header-${Math.floor(Math.random() * 100)}`);
-        this.setAttribute("i18n", this.state.context?.lang||'en');  
+        this.setAttribute("i18n", this.state.context?.lang);  
         
     } 
 
@@ -36,23 +36,19 @@ export class FunnelHeader extends FunnelElement {
 
         }}
 
-    #buttonLang(button){
-        return button===this.getAttribute("i18n")?`button is-focused${this.state.selectedClass===undefined?``:` ${this.state.selectedClass}`}"`:'button'
-    }
-    
-
     #getButtons(){
         let lngButtons = ``;
-        Object.entries(this.state.i18n).forEach(([key, value])=>{
-            lngButtons += `<button id="btn-${key}" class="${this.#buttonLang(key)}">${value}</button>`
-        
+        Object.entries(this.state.i18n.lang).forEach(([key, value])=>{
+            let focus = ['button'];
+            if (key === this.state.context.lang ){focus.push('is-focused')}
+            lngButtons += `<button id="btn-${key}" ${this.getClasses(focus, this.state.i18n.classList)}">${value}</button>`
         });
         return lngButtons        
     }
 
     addEvents(){
-        if (this.state.i18n!=undefined){
-            Object.entries(this.state.i18n).forEach(([key, value])=>{  
+        if (this.state.i18n?.lang!=undefined){
+            Object.entries(this.state.i18n.lang).forEach(([key, value])=>{  
                 this.querySelector(`#btn-${key}`).addEventListener("click",this)
             });
         }
@@ -85,10 +81,16 @@ export class FunnelHeader extends FunnelElement {
         </header>
         `
         this.addEvents();
+        let burger = this.querySelector('.navbar-burger');
+        let menu = this.querySelector('.navbar-menu');
+        burger.addEventListener('click',()=>{
+            burger.classList.toggle("is-active")
+            menu.classList.toggle("is-active")
+        }) 
     }
 
 
 
 }
 
-customElements.define("funnel-header", FunnelHeader)
+customElements.define("page-header", PageHeader)

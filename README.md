@@ -4,17 +4,17 @@
 [<img src="https://www.conference.com.mx/web/image/website/3/logo/Conference?unique=cb769b7">](https://www.conference.com.mx/comercializacion-digital)
 
 ## Components
-- FunnelElement
-- FunnelPage
-- FunnelHeader
-- FunnelFooter
+- AppElement
+- AppPage
+- PageHeader
+- ApplFooter
 
 ## Functions
 - withFacebookPixel()
 - withGoogleAnalytics()
 - withLinkedinInsightTag()
 - withPinterestTag()
--  whithAnimations()
+- whithAnimations()
 - getLang()
 - loading()
 - withXCard()
@@ -25,4 +25,4 @@
 - [Get started](https://buyerjourney.ninja/get-started).
 
 ## License
-bj-router is [GPL-3.0-or-later](./LICENSE).
+bj-core is [GPL-3.0-or-later](./LICENSE).

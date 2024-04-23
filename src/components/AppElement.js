@@ -1,7 +1,7 @@
 /**
  * Core element for creating funnel components
  */
-export class FunnelElement extends HTMLElement {
+export class AppElement extends HTMLElement {
     #default = {};
     /**
      * 
@@ -14,34 +14,38 @@ export class FunnelElement extends HTMLElement {
     }
 
     /**
-     * 
+     * Applies default values to props that are not defined in the component state
      * @param {Object} defValues Default values
      * @param {Object} props Values to be applied in the rendering
-     * @returns 
+     * @returns {Object} - Default attributes combined with shipped attributes
      */
     initState(defValues, props){
-        let state = Object.assign({}, defValues, props);
-        if (defValues!=undefined){
-            if (Object.keys(defValues).lenght!=0){
-                Object.keys(defValues).forEach(prop=>{  
-                    if (props[prop]!=undefined){
-                        if (typeof props[prop] === 'string' ||  Array.isArray(props[prop])){
-                            state[prop] = props[prop];
-                        }else{
-                            state[prop] = Object.assign({}, defValues[prop], props[prop]);
-                        }
-                        
-                    }  
-                })
+        if (props!=undefined){
+            let state = Object.assign({}, defValues, props);
+            if (defValues!=undefined){
+                if (Object.keys(defValues).lenght!=0){
+                    Object.keys(defValues).forEach(prop=>{  
+                        if (props[prop]!=undefined){
+                            if (typeof props[prop] === 'string' ||  Array.isArray(props[prop])){
+                                state[prop] = props[prop];
+                            }else{
+                                state[prop] = Object.assign({}, defValues[prop], props[prop]);
+                            }
+                            
+                        }  
+                    })
+                }
             }
+            return state;
+        }else {
+            return defValues;
         }
-        return state;
     }
 
     /**
-     * 
-     * @param {string} attribute 
-     * @returns 
+     * convierte el nombre de un atributo a camel case
+     * @param {String} attribute 
+     * @returns {String}
      */
     attribute2CamelCase(attribute) {
         const pattern = new RegExp(("-" + "([a-z])"), "g");
@@ -49,16 +53,16 @@ export class FunnelElement extends HTMLElement {
       }
     
     /**
-     * 
-     * @param {string} camelCase 
-     * @returns 
+     * Remove capitalization of an attribute name
+     * @param {String} camelCase 
+     * @returns  {String}
      */  
     camelCase2attribute(camelCase) {
         return camelCase.replace(new RegExp('-([a-z])', 'g'), (m, c) => c.toUpperCase());
       }
 
     /**
-     * 
+     * Initializes the component state and renders it.
      * @param {Object} props Attributes and properties to render the component
      */
     setState(props){
@@ -90,7 +94,7 @@ export class FunnelElement extends HTMLElement {
         if (props===undefined||props===null){
             return '';
         }else{
-            let animation = ` data-animation=${props.animation}`
+            let animation = ` data-animation=${props.effect}`
             props.delay!=undefined?animation+= ` data-delay=${props.delay}`:false;
             props.speed!=undefined?animation+=` data-speed=${props.speed}`:false;
             props.repeat!=undefined?animation+=` data-repeat=${props.repeat}`:false;
@@ -116,11 +120,10 @@ export class FunnelElement extends HTMLElement {
     }
 
     /**
-     * 
+     * Add the additional classes sent to the component props
      * 
      * @param {string} defaultClass 
      * @param {string} optionalClasses 
-     * @returns 
      */
     getClasses(defaultClass=[], optionalClasses){
         let resultClasses = [];
@@ -136,11 +139,41 @@ export class FunnelElement extends HTMLElement {
         return classes;
     }
 
+  /**
+   * Generate caption, title and subtitle of the component
+   * @param {Object} props - 
+   */
+    getTitles(props){
+        let titles = '';
+        if(props!=undefined){
+            titles = /* HTML */`
+            <div class="content">    
+            ${this.state.caption?.text[this.state.context.lang]!=undefined?`
+            <p ${this.getClasses(["subtitle"], this.state.caption?.classList)}  ${this.setAnimation(this.state.caption?.animation)}>${this.state.caption.text[this.state.context.lang]}</p>`:''}          
+            ${props.title?.text[props.context.lang]!=undefined?`
+            <h1 ${this.getClasses([], props.title?.classList)}  ${this.setAnimation(props.title?.animation)}>${props.title.text[props.context.lang]}</h1>`:``}
+            ${props.subtitle?.text[props.context.lang]!=undefined?`
+            <h2 ${this.getClasses([], props.subtitle?.classList)}  ${this.setAnimation(props.subtitle?.animation)}>${props.subtitle.text[props.context.lang]}</h2>`:``}
+           </div>`
+        }
+        return titles;
+    }
+
+    /**
+     * Generate click events on the component's CTA buttons
+     */
+    addEvents(){
+        let buttons = this.querySelectorAll("button");
+        if (buttons.length>0){
+          buttons.forEach((item)=>{
+            item.addEventListener("click",this)
+          });    
+        }  
+      }
     
     /**
-     * 
-     * @param {*} props 
-     * @returns 
+     * Create the CTA buttons of the component from the props sent
+     * @param {Object} props 
      */
     #getButtons(props){
         if(props!=undefined){
@@ -153,14 +186,13 @@ export class FunnelElement extends HTMLElement {
     }
    
     /**
-     * 
-     * @param {*} props 
-     * @returns 
+     * Generate the CTA button container and insert the buttons described in the props
+     * @param {Object} props 
      */
     buttonsRender(props){
         if(props!=undefined){
             let buttons = /* html */`
-                <p ${this.getClasses(['buttons'], props.classList)}>
+                <p ${this.getClasses(['buttons','mt-4'], props.classList)}>
                     ${this.#getButtons(props.buttons)}
                 </p>
             `
@@ -171,20 +203,30 @@ export class FunnelElement extends HTMLElement {
 
 
     /**
-     * 
+     * Render the component
      */
     render(){
         console.error('Nothing to render');
     }
 
     /**
-     * 
+     * Renders the component when inserted into the DOM
      */
     connectedCallback(){
         this.render();
     }  
 
+    disconnectedCallback(){
+        let buttons = this.querySelectorAll("button");
+        if (buttons.length>0){
+          buttons.forEach((item)=>{
+            item.removeEventListener("click",this)
+          });    
+        }  
+
+    }
+
 }
 
-customElements.define("funnel-element", FunnelElement)
+customElements.define("app-element", AppElement)
 
