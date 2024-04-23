@@ -1,7 +1,7 @@
 {
   "name": "bj-base",
   "version": "1.0.0",
-  "description": "Core components and functions to generate funnel components for the BuyerJourneyJS project",
+  "description": "Core components and functions to generate touchpoints components for the BuyerJourneyJS project",
   "main": "src/index.js",
   "module": "src/index.js",
   "scripts": {
@@ -17,5 +17,9 @@
   "license": "GPL-3.0-or-later",
   "devDependencies": {
     "esbuild": "^0.19.4"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "bulma": "^1.0.0"
   }
 }

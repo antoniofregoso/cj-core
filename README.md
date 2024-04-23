@@ -7,7 +7,7 @@
 - AppElement
 - AppPage
 - PageHeader
-- ApplFooter
+- AppFooter
 
 ## Functions
 - withFacebookPixel()
@@ -23,6 +23,10 @@
 - [BuyerJourneyJS project](https://buyerjourney.ninja/).
 - [bj-core](https://buyerjourney.ninja/bj-core).
 - [Get started](https://buyerjourney.ninja/get-started).
+
+## bj-core is made with
+- [bulma](https://bulma.io/).
+- [Animate.css](https://animate.style/).
 
 ## License
 bj-core is [GPL-3.0-or-later](./LICENSE).
