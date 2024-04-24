@@ -1,4 +1,4 @@
-export * from './components//AppElement';
+export * from './components/AppElement';
 export * from './components/AppPage';
 export * from './components/utils';
 export * from './components/ux';
