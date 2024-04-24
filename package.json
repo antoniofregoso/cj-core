@@ -1,5 +1,5 @@
 {
-  "name": "bj-base",
+  "name": "@buyerjourney/bj-core",
   "version": "1.0.0",
   "description": "Core components and functions to generate touchpoints components for the BuyerJourneyJS project",
   "main": "src/index.js",
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/antoniofregoso/bj-core.git"
   },
-  "author": "Antonio Fregoso <antoniofregoso@protonmail.com",
+  "author": "Antonio Fregoso",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
     "esbuild": "^0.19.4"
@@ -21,5 +21,15 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "bulma": "^1.0.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/antoniofregoso/bj-core/issues"
+  },
+  "homepage": "https://github.com/antoniofregoso/bj-core#readme",
+  "keywords": [
+    "vanilla-javascripts",
+    "components",
+    "funnels",
+    "touchpoints"
+  ]
 }
