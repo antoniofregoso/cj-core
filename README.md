@@ -21,7 +21,7 @@
 
 ## Documentation 
 - [BuyerJourneyJS project](https://buyerjourney.ninja/).
-- [bj-core](https://buyerjourney.ninja/bj-core).
+- [bj-core](https://buyerjourney.ninja/core).
 - [Get started](https://buyerjourney.ninja/get-started).
 
 ## bj-core is made with

@@ -11,31 +11,41 @@ export class PageHeader extends AppElement {
         super();
         this.state =this.initState(this.#default,props);
         this.getAttribute("id")||this.setAttribute("id",this.state.id||`header-${Math.floor(Math.random() * 100)}`);
-        this.setAttribute("i18n", this.state.context?.lang);  
+        this.setAttribute("i18n", this.state.context?.lang);
+        this.setAttribute("theme", this.state.context?.theme)
         
     } 
 
     handleEvent(event) {
         if (event.type === "click") {
-            const selectLang = new CustomEvent("user:select-lang",{
-            detail:{lang:event.target.id.slice(4)},
-            bubbles: true,
-            composed: true
-        });
-        this.dispatchEvent(selectLang);
+            if (event.target.id==="btn-theme"){ 
+                const selectTheme = new CustomEvent("user:select-theme",{
+                detail:this.#setTheme(),
+                bubbles: true,
+                composed: true
+                });
+                this.dispatchEvent(selectTheme);               
+
+            }else {
+                const selectLang = new CustomEvent("user:select-lang",{
+                detail:event.target.id.slice(4),
+                bubbles: true,
+                composed: true
+                });
+                this.dispatchEvent(selectLang);                
+            }
         }
     }
 
     static get observedAttributes() {
-        return ["i18n"];
+        return ["i18n", "theme"];
       }
 
       attributeChangedCallback(name, old, now) {
-        if (now==='i18n'){
-            this.state.context.lang = now
+        }
+        
 
-        }}
-
+    
     #getButtons(){
         let lngButtons = ``;
         Object.entries(this.state.i18n.lang).forEach(([key, value])=>{
@@ -47,19 +57,38 @@ export class PageHeader extends AppElement {
     }
 
     addEvents(){
+    	this.querySelector("#btn-theme").addEventListener("click",this)
         if (this.state.i18n?.lang!=undefined){
             Object.entries(this.state.i18n.lang).forEach(([key, value])=>{  
                 this.querySelector(`#btn-${key}`).addEventListener("click",this)
-            });
+            });            
+        }
+    }
+
+
+    #setTheme(){
+        if (this.state.context.theme=="dark"){
+            return 'light'
+        }else{
+            return 'dark'
+        }
+    }
+
+    #getThemeIcon(){
+       if (this.state.context?.theme==='dark'){
+            return '🔅'
+        }else{
+            return '🌙'
         }
     }
 
     render(){
+        console.log(this.state.brand)
         this.innerHTML =  /* html */`
             <header>
             <nav ${this.getClasses(["navbar"], this.state.classList)} role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
-                <img class="navbar-item"  src="${this.state.brand?.src}" width="180" height="28">
+                <img class="navbar-item"  src="${this.state.context?.theme==='light'?this.state.brand?.src:this.state.brand?.srcDark===undefined?this.state.brand?.src:this.state.brand?.srcDark}" width="180" height="28">
                 <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
@@ -67,6 +96,15 @@ export class PageHeader extends AppElement {
                 </a>
                 </div>
                 <div class="navbar-menu">
+                <div class="navbar-start">
+                <div class="navbar-item">
+                	<div class="buttons are-small">
+                	<button id="btn-theme" ${this.getClasses(["button"], this.state.i18n.classList)}>
+                	${this.#getThemeIcon()}
+                	</button>
+                	</div>
+                </div>		
+                </div>
                 ${this.state.i18n===undefined?'':`
                 <div class="navbar-end">
                     <div class="navbar-item">

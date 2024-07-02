@@ -17,7 +17,7 @@ export class PageFooter extends AppElement {
         this.innerHTML =  /* html */`
         <footer ${this.getClasses(["footer"], this.state.classList)} >
             <div class="content has-text-centered">
-                    <img  src="${ this.state.brand?.src }" style="max-width:200px">
+                    <img  src="${this.state.context?.theme==='light'?this.state.brand?.src:this.state.brand?.srcDark===undefined?this.state.brand?.src:this.state.brand?.srcDark}" style="max-width:200px">
                 <p>${ this.state.content?.text[this.state.context.lang] }</p>
                 <p><a href="${ this.state.privacyPolicy?.url }">${ this.state.privacyPolicy?.text===undefined?'':this.state.privacyPolicy?.text[this.state.context.lang] }</a></p>
             </div>
