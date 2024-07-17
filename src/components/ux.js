@@ -28,18 +28,16 @@ export function whithAnimations(){
  * @param {string} el - The ID of the element for which the animation is enabled
  */
 function setupAnimation(el){
-    var animation =' animate__animated animate__'.concat(el.getAttribute('data-animation'))
+    el.classList.add("animate__animated", `animate__${el.getAttribute('data-animation')}`);
     if (el.hasAttribute('data-delay')){
-        animation = animation.concat(' animate__delay-', el.getAttribute('data-delay'))
+        el.classList.add(`animate__delay-${el.getAttribute('data-delay')}`);
     }
     if (el.hasAttribute('data-speed')){
-        animation = animation.concat(' animate__', el.getAttribute('data-speed'))
+        el.classList.add(`animate__${el.getAttribute('data-speed')}`);
     }
     if (el.hasAttribute('data-repeat')){
-        el.getAttribute('data-repeat') === "infinite"?animation = animation.concat('animate__infinite'):animation = animation.concat(' animate__repeat-', el.getAttribute('data-repeat'))
-    }        
-    el.className = el.className.concat(animation)
-    
+        el.getAttribute('data-repeat') === "infinite"?el.classList.add("animate__infinite"):el.classList.add(`animate__repeat-${el.getAttribute('data-repeat')}`);
+    }
 }
 
 /**

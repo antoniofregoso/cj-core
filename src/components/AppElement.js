@@ -141,23 +141,37 @@ export class AppElement extends HTMLElement {
 
   /**
    * Generate caption, title and subtitle of the component
-   * @param {Object} props - 
    */
-    getTitles(props){
+    getTitles(){
         let titles = '';
-        if(props!=undefined){
+        if(this.state!=undefined){
             titles = /* HTML */`
             <div class="content">    
             ${this.state.caption?.text[this.state.context.lang]!=undefined?`
-            <p ${this.getClasses(["subtitle"], this.state.caption?.classList)}  ${this.setAnimation(this.state.caption?.animation)}>${this.state.caption.text[this.state.context.lang]}</p>`:''}          
-            ${props.title?.text[props.context.lang]!=undefined?`
-            <h1 ${this.getClasses([], props.title?.classList)}  ${this.setAnimation(props.title?.animation)}>${props.title.text[props.context.lang]}</h1>`:``}
-            ${props.subtitle?.text[props.context.lang]!=undefined?`
-            <h2 ${this.getClasses([], props.subtitle?.classList)}  ${this.setAnimation(props.subtitle?.animation)}>${props.subtitle.text[props.context.lang]}</h2>`:``}
+            <h2 ${this.getClasses(["subtitle"], this.state.caption?.classList)}  ${this.setAnimation(this.state.caption?.animation)}>${this.state.caption.text[this.state.context.lang]}</h2>`:''}          
+            ${this.state.title?.text[this.state.context.lang]!=undefined?`
+            <h1 ${this.getClasses([], this.state.title?.classList)}  ${this.setAnimation(this.state.title?.animation)}>${this.state.title.text[this.state.context.lang]}</h1>`:``}
+            ${this.state.subtitle?.text[this.state.context.lang]!=undefined?`
+            <h2 ${this.getClasses([], this.state.subtitle?.classList)}  ${this.setAnimation(this.state.subtitle?.animation)}>${this.state.subtitle.text[this.state.context.lang]}</h2>`:``}
            </div>`
         }
         return titles;
     }
+    
+    handleEvent(event){
+        if (event.type === "click") {
+            if(this.state.buttons?.eventName!=undefined){
+                this.eventName = this.state.buttons.eventName
+            }
+            const clickFunnel = new CustomEvent(this.eventName,{
+            detail:{source:event.target.id},
+            bubbles: true,
+            composed: true
+        });
+        this.dispatchEvent(clickFunnel);
+        }
+    }
+
 
     /**
      * Generate click events on the component's CTA buttons
