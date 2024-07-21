@@ -51,7 +51,7 @@ export class PageHeader extends AppElement {
         Object.entries(this.state.i18n.lang).forEach(([key, value])=>{
             let focus = ['button'];
             if (key === this.state.context.lang ){focus.push('is-focused')}
-            lngButtons += `<button id="btn-${key}" ${this.getClasses(focus, this.state.i18n.classList)}">${value}</button>`
+            lngButtons += `<button id="btn-${key}" ${this.getClasses(focus, this.state.i18n?.classList)}">${value}</button>`
         });
         return lngButtons        
     }
