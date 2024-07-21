@@ -138,6 +138,24 @@ export class AppElement extends HTMLElement {
         }
         return classes;
     }
+    
+    /**
+     * 
+     * @returns {string} The styles needed to add the background image
+     */
+    getBackground(){
+        let style = '';
+        if (this.state.backgroundImage?.url!=undefined) {
+            style = `background-image: url('${this.state.backgroundImage.url}'); background-repeat: no-repeat; background-position: center; background-size: cover;`;
+            if (this.state.backgroundImage?.fixed){
+                style = `${style} background-attachment: fixed;`
+            }
+        }else {
+            style = '';
+        }
+        
+        return ` style="${style}"`;
+    }
 
   /**
    * Generate caption, title and subtitle of the component
