@@ -83,7 +83,6 @@ export class PageHeader extends AppElement {
     }
 
     render(){
-        console.log(this.state.brand)
         this.innerHTML =  /* html */`
             <header>
             <nav ${this.getClasses(["navbar"], this.state.classList)} role="navigation" aria-label="main navigation">
@@ -99,7 +98,7 @@ export class PageHeader extends AppElement {
                 <div class="navbar-start">
                 <div class="navbar-item">
                 	<div class="buttons are-small">
-                	<button id="btn-theme" ${this.getClasses(["button"], this.state.i18n.classList)}>
+                	<button id="btn-theme" ${this.getClasses(["button"], this.state.i18n?.classList)}>
                 	${this.#getThemeIcon()}
                 	</button>
                 	</div>

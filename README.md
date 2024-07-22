@@ -1,5 +1,5 @@
 # bj-core
-
+Core components and functions to generate touchpoints components for the BuyerJourneyJS project
 ## Sponsors
 [<img src="https://www.conference.com.mx/web/image/website/3/logo/Conference?unique=cb769b7">](https://www.conference.com.mx/comercializacion-digital)
 
