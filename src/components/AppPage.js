@@ -24,8 +24,10 @@ export class AppPage extends AppElement {
         super();
         this.data = data;
         this.template = template;
-        try {
-          document.querySelector('#app').appendChild(this); 
+        try {          
+          let app = document.querySelector('#app');
+          app.innerHTML = '';
+          app.appendChild(this); 
         } catch (error){
           console.error('The element with id "app" does not exist to insert the element "app-page".', error);
         }
