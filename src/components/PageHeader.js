@@ -1,11 +1,51 @@
 import { AppElement } from "./AppElement";
-
+import { icon } from "@fortawesome/fontawesome-svg-core";
+import { faSun, faMoon, faDesktop } from '@fortawesome/free-solid-svg-icons';
 /**
  * Funnel Page Footer
  */
 export class PageHeader extends AppElement {
 
-    #default = {brandSrc:"https://bulma.io/images/bulma-logo.png"};
+    #default = {
+        brand: {
+            src: "https://customerjourney.ninja/assets/images/cj-js.png"
+        },
+        theme: {
+            text:{
+                es:"Tema",
+                en:"Theme",
+                fr:"Thème"
+            }
+        },
+        themeValues:{
+            light:{
+                text:{
+                    es:"Claro",
+                    en:"Light",
+                    fr:"Clair"
+                },
+            },
+            dark:{
+                text:{
+                    es:"Oscuro",
+                    en:"Dark",
+                    fr:"Sombre"
+                },
+            },
+            system:{
+                text:{
+                    es:"Sistema",
+                    en:"System",
+                    fr:"Système"
+                },
+            }
+        }
+
+    }
+
+    #sunIcon = icon(faSun, {classes: ['fa-1x', 'has-text-warning']}).html[0];
+    #moonIcon = icon(faMoon, {classes: ['fa-1x', 'has-text-grey-light']}).html[0];
+    #desktopIcon = icon(faDesktop, {classes: ['fa-1x', 'has-text-info']}).html[0];
 
     constructor(props={}){
         super();
@@ -18,32 +58,47 @@ export class PageHeader extends AppElement {
 
     handleEvent(event) {
         if (event.type === "click") {
-            if (event.target.id==="btn-theme"){ 
+            let theme = '';
+            switch(event.currentTarget.id){
+                case "themes":                    
+                    let themes = document.getElementById(event.currentTarget.id);
+                    themes.parentNode.classList.toggle('is-active');
+                    break;                
+                case 'light-theme':
+                    document.getElementById('themes').parentNode.classList.toggle('is-active');
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    theme = 'light';
+                    break;
+                case 'dark-theme':
+                    document.getElementById('themes').parentNode.classList.toggle('is-active');
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    document.documentElement.classList.add('cc--darkmode');
+                    theme = 'dark';
+                    break;
+                case 'system-theme':
+                    document.getElementById('themes').parentNode.classList.toggle('is-active');
+                    document.documentElement.removeAttribute('data-theme');
+                    theme = 'system';
+                    break;
+                default:
+                    const selectLang = new CustomEvent("user:select-lang",{
+                    detail:event.target.id.slice(4),
+                    bubbles: true,
+                    composed: true
+                    });
+                    this.dispatchEvent(selectLang);
+                    break;
+            }
+            if (theme !== '') {
                 const selectTheme = new CustomEvent("user:select-theme",{
-                detail:this.#setTheme(),
-                bubbles: true,
-                composed: true
+                    detail: theme,
+                    bubbles: true,
+                    composed: true
                 });
-                this.dispatchEvent(selectTheme);               
-
-            }else {
-                const selectLang = new CustomEvent("user:select-lang",{
-                detail:event.target.id.slice(4),
-                bubbles: true,
-                composed: true
-                });
-                this.dispatchEvent(selectLang);                
+                this.dispatchEvent(selectTheme);
             }
         }
     }
-
-    static get observedAttributes() {
-        return ["i18n", "theme"];
-      }
-
-      attributeChangedCallback(name, old, now) {
-        }
-        
 
     
     #getButtons(){
@@ -57,7 +112,14 @@ export class PageHeader extends AppElement {
     }
 
     addEvents(){
-    	this.querySelector("#btn-theme").addEventListener("click",this)
+        let themes = document.querySelector('#themes');
+        themes.addEventListener('click', this)
+        let lightTheme = document.querySelector('#light-theme');
+        lightTheme.addEventListener('click', this)
+        let darkTheme = document.querySelector('#dark-theme');
+        darkTheme.addEventListener('click', this)
+        let systemTheme = document.querySelector('#system-theme');
+        systemTheme.addEventListener('click', this)
         if (this.state.i18n?.lang!=undefined){
             Object.entries(this.state.i18n.lang).forEach(([key, value])=>{  
                 this.querySelector(`#btn-${key}`).addEventListener("click",this)
@@ -67,21 +129,19 @@ export class PageHeader extends AppElement {
 
 
     #setTheme(){
-        if (this.state.context.theme=="dark"){
-            return 'light'
-        }else{
-            return 'dark'
+        switch(this.state.context.theme){
+            case "light":
+                return this.#sunIcon
+                break;
+            case "dark":
+                return this.#moonIcon
+                break;  
+            default:
+                return this.#desktopIcon
+                break;
         }
     }
-
-    #getThemeIcon(){
-       if (this.state.context?.theme==='dark'){
-            return '🔅'
-        }else{
-            return '🌙'
-        }
-    }
-
+    
     render(){
         this.innerHTML =  /* html */`
             <header>
@@ -96,13 +156,22 @@ export class PageHeader extends AppElement {
                 </div>
                 <div class="navbar-menu">
                 <div class="navbar-start">
-                <div class="navbar-item">
-                	<div class="buttons are-small">
-                	<button id="btn-theme" ${this.getClasses(["button"], this.state.i18n?.classList)}>
-                	${this.#getThemeIcon()}
-                	</button>
-                	</div>
-                </div>		
+                <div class="navbar-item has-dropdown">
+                    <a id="themes" class="navbar-link is-arrowless">
+                        ${ this.state.theme?.text[this.state.context.lang]} ${ this.#setTheme() }
+                    </a>
+                    <div class="navbar-dropdown">                   
+                        <a id="light-theme" class="navbar-item">
+                            ${ this.#sunIcon } ${ this.state.themeValues.light.text[this.state.context.lang] }
+                        </a>
+                        <a id="dark-theme" class="navbar-item">
+                            ${ this.#moonIcon } ${ this.state.themeValues.dark.text[this.state.context.lang] }
+                        </a>
+                        <a id="system-theme" class="navbar-item">
+                            ${ this.#desktopIcon } ${ this.state.themeValues.system.text[this.state.context.lang] }
+                        </a>
+                    </div>
+                </div>
                 </div>
                 ${this.state.i18n===undefined?'':`
                 <div class="navbar-end">

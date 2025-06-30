@@ -1,6 +1,6 @@
 {
-  "name": "@buyerjourney/bj-core",
-  "version": "1.3.2",
+  "name": "@customerjourney/cj-core",
+  "version": "1.4.0",
   "description": "Core components and functions to generate touchpoints components for the BuyerJourneyJS project",
   "main": "src/index.js",
   "module": "src/index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/antoniofregoso/bj-core.git"
+    "url": "git+https://github.com/antoniofregoso/cj-core.git"
   },
   "author": "Antonio Fregoso",
   "license": "GPL-3.0-or-later",
@@ -23,13 +23,16 @@
     "bulma": "^1.0.0"
   },
   "bugs": {
-    "url": "https://github.com/antoniofregoso/bj-core/issues"
+    "url": "https://github.com/antoniofregoso/cj-core/issues"
   },
-  "homepage": "https://buyerjourney.ninja/core",
+  "homepage": "https://customerjourney.ninja/documentation/core/",
   "keywords": [
     "vanilla-javascripts",
     "components",
     "funnels",
-    "touchpoints"
+    "touchpoints",
+    "landing-pages",
+    "buyerjourney",
+    "customerjourney"
   ]
 }

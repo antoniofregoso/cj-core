@@ -1,7 +1,5 @@
 # bj-core
-Core components and functions to generate touchpoints components for the BuyerJourneyJS project
-## Sponsors
-[<img src="https://www.conference.com.mx/web/image/website/3/logo/Conference?unique=cb769b7">](https://www.conference.com.mx/comercializacion-digital)
+Core components and functions to generate touchpoints components for the CustomerJourneyJS project
 
 ## Components
 - AppElement
@@ -20,9 +18,9 @@ Core components and functions to generate touchpoints components for the BuyerJo
 - withXCard()
 
 ## Documentation 
-- [BuyerJourneyJS project](https://buyerjourney.ninja/).
-- [bj-core](https://buyerjourney.ninja/core).
-- [Get started](https://buyerjourney.ninja/get-started).
+- [CustomerJourneyJS project](https://customerjourney.ninja/).
+- [bj-core](https://customerjourney.ninja/documentation/core/).
+- [Get started](https://customerjourney.ninja/getting-started/).
 
 ## bj-core is made with
 - [bulma](https://bulma.io/).
