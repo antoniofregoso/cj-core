@@ -129,7 +129,7 @@ export class PageHeader extends AppElement {
 
 
     #setTheme(){
-        switch(this.state.context.theme){
+        switch(this.state.context?.theme){
             case "light":
                 return this.#sunIcon
                 break;
@@ -158,17 +158,17 @@ export class PageHeader extends AppElement {
                 <div class="navbar-start">
                 <div class="navbar-item has-dropdown">
                     <a id="themes" class="navbar-link is-arrowless">
-                        ${ this.state.theme?.text[this.state.context.lang]} ${ this.#setTheme() }
+                        ${ this.state.theme?.text[this.state.context?.lang]} ${ this.#setTheme() }
                     </a>
                     <div class="navbar-dropdown">                   
                         <a id="light-theme" class="navbar-item">
-                            ${ this.#sunIcon } ${ this.state.themeValues.light.text[this.state.context.lang] }
+                            ${ this.#sunIcon } ${ this.state.themeValues.light.text[this.state.context?.lang] }
                         </a>
                         <a id="dark-theme" class="navbar-item">
-                            ${ this.#moonIcon } ${ this.state.themeValues.dark.text[this.state.context.lang] }
+                            ${ this.#moonIcon } ${ this.state.themeValues.dark.text[this.state.context?.lang] }
                         </a>
                         <a id="system-theme" class="navbar-item">
-                            ${ this.#desktopIcon } ${ this.state.themeValues.system.text[this.state.context.lang] }
+                            ${ this.#desktopIcon } ${ this.state.themeValues.system.text[this.state.context?.lang] }
                         </a>
                     </div>
                 </div>
