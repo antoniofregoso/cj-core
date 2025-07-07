@@ -190,7 +190,7 @@ export class AppElement extends HTMLElement {
         }
     }
 
-
+	registerExtraEvents() {}
     /**
      * Generate click events on the component's CTA buttons
      */
@@ -261,4 +261,3 @@ export class AppElement extends HTMLElement {
 }
 
 customElements.define("app-element", AppElement)
-

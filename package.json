@@ -1,6 +1,6 @@
 {
   "name": "@customerjourney/cj-core",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Core components and functions to generate touchpoints components for the BuyerJourneyJS project",
   "main": "src/index.js",
   "module": "src/index.js",
@@ -19,6 +19,8 @@
     "esbuild": "^0.19.4"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "animate.css": "^4.1.1",
     "bulma": "^1.0.0"
   },
