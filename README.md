@@ -28,4 +28,4 @@ Core components and functions to generate touchpoints components for the Custome
 - [Animate.css](https://animate.style/).
 
 ## License
-bj-core is [GPL-3.0-or-later](./LICENSE).
+cj-core is [GPL-3.0-or-later](./LICENSE).
