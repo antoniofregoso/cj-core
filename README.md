@@ -1,4 +1,4 @@
-# bj-core
+# cj-core
 Core components and functions to generate touchpoints components for the CustomerJourneyJS project
 
 ## Components
@@ -16,10 +16,11 @@ Core components and functions to generate touchpoints components for the Custome
 - getLang()
 - loading()
 - withXCard()
+- generateSessionToken()
 
 ## Documentation 
 - [CustomerJourneyJS project](https://customerjourney.ninja/).
-- [bj-core](https://customerjourney.ninja/documentation/core/).
+- [cj-core](https://customerjourney.ninja/documentation/core/).
 - [Get started](https://customerjourney.ninja/getting-started/).
 
 ## bj-core is made with

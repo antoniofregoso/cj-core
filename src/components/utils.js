@@ -17,3 +17,16 @@ export function slugify(input) {
     return slug;
 
     }
+
+export function generateSessionToken(length = 32) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const randomValues = new Uint8Array(length);
+    crypto.getRandomValues(randomValues);
+    
+    let sessionId = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = randomValues[i] % characters.length;
+        sessionId += characters[randomIndex];
+    }    
+    return sessionId;
+}

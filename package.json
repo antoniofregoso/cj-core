@@ -1,6 +1,6 @@
 {
   "name": "@customerjourney/cj-core",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "Core components and functions to generate touchpoints components for the BuyerJourneyJS project",
   "main": "src/index.js",
   "module": "src/index.js",

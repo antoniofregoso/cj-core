@@ -203,43 +203,52 @@ export class AppPage extends AppElement {
       }
     }
 
-    /**
-     * Detects if the component has already been viewed
-     * @param {HTMLElement} el 
-     * @returns { Boolean} - True if the element was viewed in its entirety, false if it is not yet visible
-     */
-    #isInViewport(el) {
-      const rect = el.getBoundingClientRect();
-      return (
-          rect.top >= 0 &&
-          rect.left >= 0 &&
-          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-
-      );
-    }
+   
 
     /**
      * Add the events that the page responds to
      */  
     #addEvents(){
       if (Array.isArray(this.data.props.events.trackViewed)){
-        document.addEventListener('scroll',()=>{
-          this.data.props.events.trackViewed.forEach(id=>{
-            var el = this.querySelector(`#${id}`)
-            if (this.#isInViewport(el)==true){
-              let viewedElement = new CustomEvent('viewedelement',{
-                detail:{viewed:el.id},
+        const observer = new IntersectionObserver((entries) => {
+        // Itera sobre las entradas observadas
+          entries.forEach((entry) => {
+            const id = entry.target.id;
+            if (entry.isIntersecting) {
+              // Elemento es visible
+              let viewedElement = new CustomEvent('viewedelement', {
+                detail: { source: id },
                 bubbles: true,
-                composed: true
+                composed: true,
               });
               this.dispatchEvent(viewedElement);
+            } else {
+              // Elemento dejó de ser visible
+              let unviewedElement = new CustomEvent('unviewedelement', {
+                detail: { source: id },
+                bubbles: true,
+                composed: true,
+              });
+              this.dispatchEvent(unviewedElement);
             }
-          });
-        }, {
-          passive: true
+          
+        });
+        },
+        {
+          root: null, // Usa el viewport como root
+          rootMargin: '0px', // Margen adicional, si es necesario
+          threshold: 1.0, // 1.0 significa que el elemento debe estar completamente visible
+        }
+      );
+
+      // Observa cada elemento con los IDs especificados
+      this.data.props.events.trackViewed.forEach((id) => {
+        const el = this.querySelector(`#${id}`);
+        if (el) {
+          observer.observe(el);
+        }
       });
-      }
+      };
       if (this.data.props?.events?.leavingapp===true){
         let leavingApp = new CustomEvent('leavingapp',{
           detail:{source:this.data.props.id},
@@ -268,13 +277,47 @@ export class AppPage extends AppElement {
       }
     }
 
+  #extractEventNames(jsonObj) {
+    const eventNames = new Set(); // Usamos Set para evitar duplicados
 
-    /**
-     * Add listeners to each of the events
-     * @param {Array} events - List of all events to follow generated within the funnel
-     */
-    eventsToListen(events, handleEvents){
-      events.forEach((value,index)=>{
+    function traverse(obj) {
+      if (!obj || typeof obj !== 'object') return;
+
+      // Si encontramos una clave 'eventName', la agregamos al Set
+      if (obj.hasOwnProperty('eventName')) {
+        eventNames.add(obj.eventName);
+      }
+
+      // Recorremos todas las claves del objeto
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          // Si el valor es un objeto o array, lo recorremos recursivamente
+          if (typeof obj[key] === 'object' && obj[key] !== null) {
+            traverse(obj[key]);
+          }
+        }
+      }
+    }
+
+    traverse(jsonObj);
+    return Array.from(eventNames); // Convertimos el Set a un array
+  }
+
+ 
+    setEvents(handleEvents){
+      let listen = this.#extractEventNames(this.data.props.components);
+      listen.push(...["user:select-lang", "user:select-theme"]);
+      if (this.data.props.events.leavingapp===true){
+        listen.push("leavingapp");
+      }
+      if (this.data.props.events.leavedapp===true){
+        listen.push("leavedapp");
+      }
+      if (Array.isArray(this.data.props.events.trackViewed)&& this.data.props.events.trackViewed.length>0){
+        listen.push("viewedelement");
+        listen.push("unviewedelement");
+      }
+      listen.forEach((value,index)=>{
         this.addEventListener(value, handleEvents);
       });
     }

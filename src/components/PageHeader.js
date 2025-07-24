@@ -66,18 +66,15 @@ export class PageHeader extends AppElement {
                     break;                
                 case 'light-theme':
                     document.getElementById('themes').parentNode.classList.toggle('is-active');
-                    document.documentElement.setAttribute('data-theme', 'light');
                     theme = 'light';
                     break;
                 case 'dark-theme':
                     document.getElementById('themes').parentNode.classList.toggle('is-active');
-                    document.documentElement.setAttribute('data-theme', 'dark');
                     document.documentElement.classList.add('cc--darkmode');
                     theme = 'dark';
                     break;
                 case 'system-theme':
                     document.getElementById('themes').parentNode.classList.toggle('is-active');
-                    document.documentElement.removeAttribute('data-theme');
                     theme = 'system';
                     break;
                 default:
@@ -131,13 +128,16 @@ export class PageHeader extends AppElement {
     #setTheme(){
         switch(this.state.context?.theme){
             case "light":
-                return this.#sunIcon
+                document.documentElement.setAttribute('data-theme', 'light');
+                return this.#sunIcon;
                 break;
             case "dark":
-                return this.#moonIcon
+                document.documentElement.setAttribute('data-theme', 'dark');
+                return this.#moonIcon;
                 break;  
             default:
-                return this.#desktopIcon
+                document.documentElement.removeAttribute('data-theme');
+                return this.#desktopIcon;
                 break;
         }
     }
