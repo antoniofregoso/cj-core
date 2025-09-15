@@ -147,7 +147,7 @@ export class PageHeader extends AppElement {
             <header>
             <nav ${this.getClasses(["navbar"], this.state.classList)} role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
-                <img class="navbar-item"  src="${this.state.context?.theme==='light'?this.state.brand?.src:this.state.brand?.srcDark===undefined?this.state.brand?.src:this.state.brand?.srcDark}" width="180" height="28">
+                <img class="navbar-item"  src="${this.state.context?.theme==='light'?this.state.brand?.src:this.state.brand?.srcDark===undefined?this.state.brand?.src:this.state.brand?.srcDark}" width="160" height="40">
                 <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>

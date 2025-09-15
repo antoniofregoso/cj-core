@@ -5,7 +5,12 @@ import { AppElement } from "./AppElement";
  */
 export class PageFooter extends AppElement {
 
-    #default = {}
+    #default = {
+        brand:{
+            name:"CustumerJourney.js",
+            url:"https://customerjourney.ninja/"
+        }
+    }
 
     constructor(props={}){
         super();
@@ -22,7 +27,7 @@ export class PageFooter extends AppElement {
                 <p><a href="${ this.state.privacyPolicy?.url }">${ this.state.privacyPolicy?.text===undefined?'':this.state.privacyPolicy?.text[this.state.context.lang] }</a></p>
             </div>
             <div class="has-text-left" >
-                <h4>Powered by <a href="https://www.conference.com.mx/comercializacion-digital">Conference</a></h4>
+                <h4>Powered by <a href="${this.state.brand?.url}">${this.state.brand.name}</a></h4>
             </div>
         </footer>
         `;
