@@ -210,7 +210,7 @@ export class AppPage extends AppElement {
      */  
     #addEvents(){
       if (Array.isArray(this.data.props.events.trackViewed)){
-        const observer = new IntersectionObserver((entries) => {
+        const observerUser = new IntersectionObserver((entries) => {
         // Itera sobre las entradas observadas
           entries.forEach((entry) => {
             const id = entry.target.id;
@@ -245,7 +245,7 @@ export class AppPage extends AppElement {
       this.data.props.events.trackViewed.forEach((id) => {
         const el = this.querySelector(`#${id}`);
         if (el) {
-          observer.observe(el);
+          observerUser.observe(el);
         }
       });
       };

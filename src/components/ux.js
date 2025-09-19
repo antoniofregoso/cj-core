@@ -5,7 +5,7 @@
 export function whithAnimations(){
     let objs = document.querySelectorAll('[data-animation]')
     let options = { threshold: 0.1}   
-    var observer = new IntersectionObserver(entries=>{
+    var observerAnimations = new IntersectionObserver(entries=>{
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 setupAnimation(entry.target)
@@ -19,7 +19,7 @@ export function whithAnimations(){
         })
     })
     objs.forEach(obj => {
-        observer.observe(obj);
+        observerAnimations.observe(obj);
     })
 }
 
