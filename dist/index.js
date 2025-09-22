@@ -427,35 +427,48 @@
       }
     }
     /**
-     * Detects if the component has already been viewed
-     * @param {HTMLElement} el 
-     * @returns { Boolean} - True if the element was viewed in its entirety, false if it is not yet visible
-     */
-    #isInViewport(el) {
-      const rect = el.getBoundingClientRect();
-      return rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth);
-    }
-    /**
      * Add the events that the page responds to
      */
     #addEvents() {
       if (Array.isArray(this.data.props.events.trackViewed)) {
-        document.addEventListener("scroll", () => {
-          this.data.props.events.trackViewed.forEach((id) => {
-            var el = this.querySelector(`#${id}`);
-            if (this.#isInViewport(el) == true) {
-              let viewedElement = new CustomEvent("viewedelement", {
-                detail: { viewed: el.id },
-                bubbles: true,
-                composed: true
-              });
-              this.dispatchEvent(viewedElement);
-            }
-          });
-        }, {
-          passive: true
+        const observerUser = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              const id = entry.target.id;
+              if (entry.isIntersecting) {
+                let viewedElement = new CustomEvent("viewedelement", {
+                  detail: { source: id },
+                  bubbles: true,
+                  composed: true
+                });
+                this.dispatchEvent(viewedElement);
+              } else {
+                let unviewedElement = new CustomEvent("unviewedelement", {
+                  detail: { source: id },
+                  bubbles: true,
+                  composed: true
+                });
+                this.dispatchEvent(unviewedElement);
+              }
+            });
+          },
+          {
+            root: null,
+            // Usa el viewport como root
+            rootMargin: "0px",
+            // Margen adicional, si es necesario
+            threshold: 1
+            // 1.0 significa que el elemento debe estar completamente visible
+          }
+        );
+        this.data.props.events.trackViewed.forEach((id) => {
+          const el = this.querySelector(`#${id}`);
+          if (el) {
+            observerUser.observe(el);
+          }
         });
       }
+      ;
       if (this.data.props?.events?.leavingapp === true) {
         let leavingApp = new CustomEvent("leavingapp", {
           detail: { source: this.data.props.id },
@@ -481,12 +494,39 @@
         });
       }
     }
-    /**
-     * Add listeners to each of the events
-     * @param {Array} events - List of all events to follow generated within the funnel
-     */
-    eventsToListen(events, handleEvents) {
-      events.forEach((value, index) => {
+    #extractEventNames(jsonObj) {
+      const eventNames = /* @__PURE__ */ new Set();
+      function traverse(obj) {
+        if (!obj || typeof obj !== "object")
+          return;
+        if (obj.hasOwnProperty("eventName")) {
+          eventNames.add(obj.eventName);
+        }
+        for (const key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            if (typeof obj[key] === "object" && obj[key] !== null) {
+              traverse(obj[key]);
+            }
+          }
+        }
+      }
+      traverse(jsonObj);
+      return Array.from(eventNames);
+    }
+    setEvents(handleEvents) {
+      let listen = this.#extractEventNames(this.data.props.components);
+      listen.push(...["user:select-lang", "user:select-theme"]);
+      if (this.data.props.events.leavingapp === true) {
+        listen.push("leavingapp");
+      }
+      if (this.data.props.events.leavedapp === true) {
+        listen.push("leavedapp");
+      }
+      if (Array.isArray(this.data.props.events.trackViewed) && this.data.props.events.trackViewed.length > 0) {
+        listen.push("viewedelement");
+        listen.push("unviewedelement");
+      }
+      listen.forEach((value, index) => {
         this.addEventListener(value, handleEvents);
       });
     }
@@ -517,12 +557,23 @@
     slug = slug.replace(/[\s-]+/g, "%20");
     return slug;
   }
+  function generateSessionToken(length = 32) {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const randomValues = new Uint8Array(length);
+    crypto.getRandomValues(randomValues);
+    let sessionId = "";
+    for (let i = 0; i < length; i++) {
+      const randomIndex = randomValues[i] % characters.length;
+      sessionId += characters[randomIndex];
+    }
+    return sessionId;
+  }
 
   // src/components/ux.js
   function whithAnimations() {
     let objs = document.querySelectorAll("[data-animation]");
     let options = { threshold: 0.1 };
-    var observer = new IntersectionObserver((entries) => {
+    var observerAnimations = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setupAnimation(entry.target);
@@ -536,7 +587,7 @@
       });
     });
     objs.forEach((obj) => {
-      observer.observe(obj);
+      observerAnimations.observe(obj);
     });
   }
   function setupAnimation(el) {
@@ -567,7 +618,12 @@
 
   // src/components/PageFooter.js
   var PageFooter = class extends AppElement {
-    #default = {};
+    #default = {
+      brand: {
+        name: "CustumerJourney.js",
+        url: "https://customerjourney.ninja/"
+      }
+    };
     constructor(props = {}) {
       super();
       this.state = this.initState(this.#default, props);
@@ -583,7 +639,7 @@
                 <p><a href="${this.state.privacyPolicy?.url}">${this.state.privacyPolicy?.text === void 0 ? "" : this.state.privacyPolicy?.text[this.state.context.lang]}</a></p>
             </div>
             <div class="has-text-left" >
-                <h4>Powered by <a href="https://www.conference.com.mx/comercializacion-digital">Conference</a></h4>
+                <h4>Powered by <a href="${this.state.brand?.url}">${this.state.brand.name}</a></h4>
             </div>
         </footer>
         `;
@@ -3496,18 +3552,15 @@
             break;
           case "light-theme":
             document.getElementById("themes").parentNode.classList.toggle("is-active");
-            document.documentElement.setAttribute("data-theme", "light");
             theme = "light";
             break;
           case "dark-theme":
             document.getElementById("themes").parentNode.classList.toggle("is-active");
-            document.documentElement.setAttribute("data-theme", "dark");
             document.documentElement.classList.add("cc--darkmode");
             theme = "dark";
             break;
           case "system-theme":
             document.getElementById("themes").parentNode.classList.toggle("is-active");
-            document.documentElement.removeAttribute("data-theme");
             theme = "system";
             break;
           default:
@@ -3558,12 +3611,15 @@
     #setTheme() {
       switch (this.state.context?.theme) {
         case "light":
+          document.documentElement.setAttribute("data-theme", "light");
           return this.#sunIcon;
           break;
         case "dark":
+          document.documentElement.setAttribute("data-theme", "dark");
           return this.#moonIcon;
           break;
         default:
+          document.documentElement.removeAttribute("data-theme");
           return this.#desktopIcon;
           break;
       }
@@ -3574,7 +3630,7 @@
             <header>
             <nav ${this.getClasses(["navbar"], this.state.classList)} role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
-                <img class="navbar-item"  src="${this.state.context?.theme === "light" ? this.state.brand?.src : this.state.brand?.srcDark === void 0 ? this.state.brand?.src : this.state.brand?.srcDark}" width="180" height="28">
+                <img class="navbar-item"  src="${this.state.context?.theme === "light" ? this.state.brand?.src : this.state.brand?.srcDark === void 0 ? this.state.brand?.src : this.state.brand?.srcDark}" width="160" height="40">
                 <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
