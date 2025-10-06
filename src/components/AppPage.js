@@ -24,6 +24,19 @@ export class AppPage extends AppElement {
         super();
         this.data = data;
         this.template = template;
+        this.scrollStopping = {
+          name:"",
+          session:"",
+          page:{
+            start:Date.now(),
+            end:0,
+            time:0,
+            leavingapp:0,
+            views:0,
+            req:{}
+          },
+          sections:{}
+        }
         try {          
           let app = document.querySelector('#app');
           app.innerHTML = '';
@@ -202,17 +215,37 @@ export class AppPage extends AppElement {
           console.error('Error:', error);
       }
     }
-
-   
+    /**
+     * 
+     * @param {String} htmlTemplate 
+     * @param {Array} validNames 
+     * @returns 
+     */
+   #getOrderedIdsFromTemplate(htmlTemplate, validNames) {
+    const regex = /id="([^"]+)"/g;
+    let match;
+    let orderedIds = [];
+    while ((match = regex.exec(htmlTemplate)) !== null) {
+        orderedIds.push(match[1]);
+    }
+    const validIdsInOrder = orderedIds.filter(id => validNames.includes(id));
+    
+    return validIdsInOrder;
+}
 
     /**
      * Add the events that the page responds to
      */  
     #addEvents(){
       if (Array.isArray(this.data.props.events.trackViewed)){
-        const observerUser = new IntersectionObserver((entries) => {
+        let sections = this.#getOrderedIdsFromTemplate(this.template,this.data.props.events.trackViewed);
+        sections.forEach((id)=>{
+          this.scrollStopping.sections[id]={start:0,end:0,time:0,views:0}
+        });
+        const observer = new IntersectionObserver((entries) => {
         // Itera sobre las entradas observadas
           entries.forEach((entry) => {
+            this.scrollStopping
             const id = entry.target.id;
             if (entry.isIntersecting) {
               // Elemento es visible
@@ -245,7 +278,7 @@ export class AppPage extends AppElement {
       this.data.props.events.trackViewed.forEach((id) => {
         const el = this.querySelector(`#${id}`);
         if (el) {
-          observerUser.observe(el);
+          observer.observe(el);
         }
       });
       };
