@@ -278,7 +278,7 @@ export class AppPage extends AppElement {
           this.scrollStopping.sections[id]={order:i,start:0,end:0,time:0,views:0}
           i++;
         });
-        const observer = new IntersectionObserver((entries) => {
+        const observerSections = new IntersectionObserver((entries) => {
         // Itera sobre las entradas observadas
           entries.forEach((entry) => {
             this.scrollStopping
@@ -314,7 +314,7 @@ export class AppPage extends AppElement {
       this.data.props.events.trackViewed.forEach((id) => {
         const el = this.querySelector(`#${id}`);
         if (el) {
-          observer.observe(el);
+          observerSections.observe(el);
         }
       });
       };
