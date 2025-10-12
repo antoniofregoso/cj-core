@@ -128,7 +128,7 @@ export class AppPage extends AppElement {
         document.body.classList.add(...this.data.props.classList);
       }
     }
-   
+  
     /**
      * 
      * @param {Object} props 
@@ -141,8 +141,42 @@ export class AppPage extends AppElement {
         } 
         return props;
     }
-
-  
+    /**
+     * 
+     * @param {String} name 
+     * @param {Object} track 
+     * @returns 
+     */
+    setSectionViewed(name, track){
+      let res ={ 
+        [name]:{
+        order: track.order,
+        start: Date.now(),
+        end: 0,
+        time: 0,
+        views: track.views + 1
+        }
+      };
+      return res;
+    }
+    /**
+     * 
+     * @param {String} name 
+     * @param {Object} track 
+     * @returns 
+     */
+    setSectionUnviewed(name, track){
+      let res = {
+        [name]:{
+        order: track.order,
+        start: track.start,
+        end: Date.now(),
+        time: track.time + (Date.now() - track.start),
+        views: track.views
+        }
+      };
+      return res;
+      }
 
     /**
      * Update the props to each of the components
@@ -221,7 +255,7 @@ export class AppPage extends AppElement {
      * @param {Array} validNames 
      * @returns 
      */
-   #getOrderedIdsFromTemplate(htmlTemplate, validNames) {
+  #getOrderedIdsFromTemplate(htmlTemplate, validNames) {
     const regex = /id="([^"]+)"/g;
     let match;
     let orderedIds = [];
@@ -239,8 +273,10 @@ export class AppPage extends AppElement {
     #addEvents(){
       if (Array.isArray(this.data.props.events.trackViewed)){
         let sections = this.#getOrderedIdsFromTemplate(this.template,this.data.props.events.trackViewed);
+        let i = 0;
         sections.forEach((id)=>{
-          this.scrollStopping.sections[id]={start:0,end:0,time:0,views:0}
+          this.scrollStopping.sections[id]={order:i,start:0,end:0,time:0,views:0}
+          i++;
         });
         const observer = new IntersectionObserver((entries) => {
         // Itera sobre las entradas observadas
@@ -270,7 +306,7 @@ export class AppPage extends AppElement {
         {
           root: null, // Usa el viewport como root
           rootMargin: '0px', // Margen adicional, si es necesario
-          threshold: 1.0, // 1.0 significa que el elemento debe estar completamente visible
+          threshold: 0.25, // 1.0 significa que el elemento debe estar completamente visible
         }
       );
 
@@ -293,7 +329,6 @@ export class AppPage extends AppElement {
           {        
             this.dispatchEvent(leavingApp);        
           } 
-         
         })
       }
       if (this.data.props?.events?.leavedapp===true){
@@ -336,7 +371,6 @@ export class AppPage extends AppElement {
     return Array.from(eventNames); // Convertimos el Set a un array
   }
 
- 
     setEvents(handleEvents){
       let listen = this.#extractEventNames(this.data.props.components);
       listen.push(...["user:select-lang", "user:select-theme"]);
@@ -370,7 +404,6 @@ export class AppPage extends AppElement {
         }  
       }  
     }
-       
 }
 
 customElements.define("app-page", AppPage)
