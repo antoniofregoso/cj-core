@@ -50,7 +50,7 @@ export class AppElement extends HTMLElement {
     attribute2CamelCase(attribute) {
         const pattern = new RegExp(("-" + "([a-z])"), "g");
         return attribute.replace(pattern, (match, capture) => capture.toUpperCase());
-      }
+    }
     
     /**
      * Remove capitalization of an attribute name
@@ -59,7 +59,7 @@ export class AppElement extends HTMLElement {
      */  
     camelCase2attribute(camelCase) {
         return camelCase.replace(new RegExp('-([a-z])', 'g'), (m, c) => c.toUpperCase());
-      }
+    }
 
     /**
      * Initializes the component state and renders it.
@@ -116,7 +116,7 @@ export class AppElement extends HTMLElement {
     updateClassList(){
         if (this.state.classList){
             this.classList.add(...this.state.classList)
-          }
+        }
     }
 
     /**
@@ -157,7 +157,7 @@ export class AppElement extends HTMLElement {
         return ` style="${style}"`;
     }
 
-  /**
+    /**
    * Generate caption, title and subtitle of the component
    */
     getTitles(){
@@ -165,22 +165,20 @@ export class AppElement extends HTMLElement {
         if(this.state!=undefined){
             titles = /* HTML */`
             <div class="content">    
-            ${this.state.caption?.text[this.state.context.lang]!=undefined?`
-            <h2 ${this.getClasses(["subtitle"], this.state.caption?.classList)}  ${this.setAnimation(this.state.caption?.animation)}>${this.state.caption.text[this.state.context.lang]}</h2>`:''}          
-            ${this.state.title?.text[this.state.context.lang]!=undefined?`
-            <h1 ${this.getClasses([], this.state.title?.classList)}  ${this.setAnimation(this.state.title?.animation)}>${this.state.title.text[this.state.context.lang]}</h1>`:``}
-            ${this.state.subtitle?.text[this.state.context.lang]!=undefined?`
-            <h2 ${this.getClasses([], this.state.subtitle?.classList)}  ${this.setAnimation(this.state.subtitle?.animation)}>${this.state.subtitle.text[this.state.context.lang]}</h2>`:``}
-           </div>`
+                ${this.state.caption?.text[this.state.context.lang]!=undefined?`
+                <h2 ${this.getClasses(["subtitle"], this.state.caption?.classList)}  ${this.setAnimation(this.state.caption?.animation)}>${this.state.caption.text[this.state.context.lang]}</h2>`:''}          
+                ${this.state.title?.text[this.state.context.lang]!=undefined?`
+                <h1 ${this.getClasses([], this.state.title?.classList)}  ${this.setAnimation(this.state.title?.animation)}>${this.state.title.text[this.state.context.lang]}</h1>`:``}
+                ${this.state.subtitle?.text[this.state.context.lang]!=undefined?`
+                <h2 ${this.getClasses([], this.state.subtitle?.classList)}  ${this.setAnimation(this.state.subtitle?.animation)}>${this.state.subtitle.text[this.state.context.lang]}</h2>`:``}
+            </div>`
         }
         return titles;
     }
     
     handleEvent(event){
         if (event.type === "click") {
-            if(this.state.buttons?.eventName!=undefined){
-                this.eventName = this.state.buttons.eventName
-            }
+            this.eventName = this.state.buttons?.eventName ?? this.state.eventName ?? this.eventName; 
             const clickFunnel = new CustomEvent(this.eventName,{
             detail:{source:event.target.id},
             bubbles: true,
@@ -197,11 +195,11 @@ export class AppElement extends HTMLElement {
     addEvents(){
         let buttons = this.querySelectorAll("button");
         if (buttons.length>0){
-          buttons.forEach((item)=>{
+            buttons.forEach((item)=>{
             item.addEventListener("click",this)
-          });    
+            });    
         }  
-      }
+    }
     
     /**
      * Create the CTA buttons of the component from the props sent
