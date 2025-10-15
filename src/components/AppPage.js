@@ -177,6 +177,22 @@ export class AppPage extends AppElement {
       };
       return res;
       }
+    /**
+     * 
+     * @param {Object} track 
+     * @returns 
+     */
+    setPageQuit(track){
+      let res = {
+            start:track.start,
+            end:Date.now(),
+            time:Date.now() - track.start,
+            leavingapp:track.leavingapp,
+            views:track.views,
+            req:track.req
+          };
+      return res;
+        }
 
     /**
      * Update the props to each of the components
