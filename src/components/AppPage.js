@@ -11,6 +11,7 @@ export class AppPage extends AppElement {
         leavingApp:false,
         leavedApp:false
           },
+        REABANDONMENT_THRESHOLD_MS:3 * 60 * 1000, // 3 minutes
       classList:[]
     };
     
@@ -46,6 +47,9 @@ export class AppPage extends AppElement {
         }
         
     }
+
+    #hasLeavedApp = false; // To avoid multiple triggers of the event
+    #timeLeavedApp = 0; // To store the time when the user left the app
 
     /**
      * Disable browser cache
@@ -281,7 +285,25 @@ export class AppPage extends AppElement {
     const validIdsInOrder = orderedIds.filter(id => validNames.includes(id));
     
     return validIdsInOrder;
-}
+    }
+
+    #dispatchLeavedApp(){
+      if (this.#hasLeavedApp) {
+        let deltaTime = Date.now() - this.#timeLeavedApp;
+        if (deltaTime < this.state.REABANDONMENT_THRESHOLD_MS) {
+          // User returned within the threshold, do not trigger the event again
+          return;
+        }
+      }
+      this.#hasLeavedApp = true; // Set the flag to true to indicate the event has been triggered
+      this.#timeLeavedApp = Date.now(); // Update the time when the user left the app
+      let leavedApp = new CustomEvent('leavedapp',{
+        detail:{source:this.data.props.id},
+        bubbles: true,
+        composed: true
+      });
+      this.dispatchEvent(leavedApp);
+    }
 
     /**
      * Add the events that the page responds to
@@ -348,15 +370,13 @@ export class AppPage extends AppElement {
         })
       }
       if (this.data.props?.events?.leavedapp===true){
-        let leavedApp = new CustomEvent('leavedapp',{
-          detail:{source:this.data.props.id},
-          bubbles: true,
-          composed: true
-        });
         document.addEventListener("visibilitychange", () => {
           if (document.visibilityState === "hidden") {
-            this.dispatchEvent(leavedApp);
+            this.#dispatchLeavedApp();
           }
+        });
+        window.addEventListener("pagehide", () => {
+          this.#dispatchLeavedApp();
         });
       }
     }
