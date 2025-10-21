@@ -150,6 +150,9 @@ export class AppElement extends HTMLElement {
             if (this.state.backgroundImage?.fixed){
                 style = `${style} background-attachment: fixed;`
             }
+            if (this.state.backgroundImage?.filter){
+                style = `${style} filter: ${this.state.backgroundImage?.filter};`
+            }
         }else {
             style = '';
         }
