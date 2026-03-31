@@ -3,6 +3,7 @@
  */
 export class AppElement extends HTMLElement {
     #default = {};
+    #cleanupCallbacks = new Set();
     /**
      * 
      * @param {Object} props Attributes necessary to render the HTML element
@@ -233,6 +234,28 @@ export class AppElement extends HTMLElement {
         }else return '';
     }
 
+    addCleanup(callback){
+        if (typeof callback !== "function") return () => {};
+
+        this.#cleanupCallbacks.add(callback);
+
+        return () => {
+            this.#cleanupCallbacks.delete(callback);
+        };
+    }
+
+    runCleanups(){
+        this.#cleanupCallbacks.forEach((callback) => {
+            try {
+                callback();
+            } catch (error) {
+                console.error("Error during component cleanup", error);
+            }
+        });
+
+        this.#cleanupCallbacks.clear();
+    }
+
 
 
     /**
@@ -257,6 +280,7 @@ export class AppElement extends HTMLElement {
           });    
         }  
 
+        this.runCleanups();
     }
 
 }

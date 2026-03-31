@@ -14,6 +14,7 @@ export class AppPage extends AppElement {
         REABANDONMENT_THRESHOLD_MS:3 * 60 * 1000, // 3 minutes
       classList:[]
     };
+    #renderCleanupCallbacks = [];
     
 
     /**
@@ -305,10 +306,29 @@ export class AppPage extends AppElement {
       this.dispatchEvent(leavedApp);
     }
 
+    #addRenderCleanup(callback){
+      if (typeof callback !== "function") return;
+      this.#renderCleanupCallbacks.push(callback);
+    }
+
+    #runRenderCleanups(){
+      this.#renderCleanupCallbacks.forEach((callback) => {
+        try {
+          callback();
+        } catch (error) {
+          console.error('Error during page render cleanup', error);
+        }
+      });
+
+      this.#renderCleanupCallbacks = [];
+    }
+
     /**
      * Add the events that the page responds to
      */  
     #addEvents(){
+      this.#runRenderCleanups();
+
       if (Array.isArray(this.data.props.events.trackViewed)){
         let sections = this.#getOrderedIdsFromTemplate(this.template,this.data.props.events.trackViewed);
         let i = 0;
@@ -316,7 +336,7 @@ export class AppPage extends AppElement {
           this.scrollStopping.sections[id]={order:i,start:0,end:0,time:0,views:0}
           i++;
         });
-        const observerSections = new IntersectionObserver((entries) => {
+      const observerSections = new IntersectionObserver((entries) => {
         // Itera sobre las entradas observadas
           entries.forEach((entry) => {
             this.scrollStopping
@@ -355,6 +375,8 @@ export class AppPage extends AppElement {
           observerSections.observe(el);
         }
       });
+
+      this.#addRenderCleanup(() => observerSections.disconnect());
       };
       if (this.data.props?.events?.leavingapp===true){
         let leavingApp = new CustomEvent('leavingapp',{
@@ -362,21 +384,33 @@ export class AppPage extends AppElement {
           bubbles: true,
           composed: true
         });
-        document.addEventListener('mouseleave',(e)=>{   
+        const handleMouseLeave = (e) => {
           if(e.clientY <= 0 || e.clientX <= 0 || (e.clientX >= window.innerWidth || e.clientY >= window.innerHeight))
           {        
             this.dispatchEvent(leavingApp);        
           } 
-        })
+        };
+
+        document.addEventListener('mouseleave', handleMouseLeave);
+        this.#addRenderCleanup(() => {
+          document.removeEventListener('mouseleave', handleMouseLeave);
+        });
       }
       if (this.data.props?.events?.leavedapp===true){
-        document.addEventListener("visibilitychange", () => {
+        const handleVisibilityChange = () => {
           if (document.visibilityState === "hidden") {
             this.#dispatchLeavedApp();
           }
-        });
-        window.addEventListener("pagehide", () => {
+        };
+        const handlePageHide = () => {
           this.#dispatchLeavedApp();
+        };
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+        window.addEventListener("pagehide", handlePageHide);
+        this.#addRenderCleanup(() => {
+          document.removeEventListener("visibilitychange", handleVisibilityChange);
+          window.removeEventListener("pagehide", handlePageHide);
         });
       }
     }
@@ -439,6 +473,11 @@ export class AppPage extends AppElement {
           this.#addEvents();
         }  
       }  
+    }
+
+    disconnectedCallback(){
+      this.#runRenderCleanups();
+      super.disconnectedCallback();
     }
 }
 
