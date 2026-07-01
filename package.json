@@ -1,11 +1,17 @@
 {
   "name": "@customerjourney/cj-core",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "description": "Core components and functions to generate touchpoints components for the BuyerJourneyJS project",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.min.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.min.js",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
-    "prod": "esbuild src/index.js --bundle --minify  --outfile=dist/index.js",
+    "prod": "esbuild src/index.js --bundle --minify  --outfile=dist/index.min.js",
     "build": "esbuild src/index.js --bundle  --outfile=dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,7 +33,7 @@
   "bugs": {
     "url": "https://github.com/antoniofregoso/cj-core/issues"
   },
-  "homepage": "https://antoniofregoso.github.io/customerjourney/documentation/core/",
+  "homepage": "https://antoniofregoso.github.io/customerjourney/documentation/router/",
   "keywords": [
     "vanilla-javascripts",
     "components",
