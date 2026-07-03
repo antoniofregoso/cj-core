@@ -6,13 +6,13 @@
   "module": "dist/index.min.js",
   "exports": {
     ".": {
-      "import": "./dist/index.min.js",
-      "require": "./dist/index.js"
-    }
+      "import": "./dist/index.min.js"
+    },
+    "./pageloader.css": "./src/pageloader.css"
   },
   "scripts": {
-    "prod": "esbuild src/index.js --bundle --minify  --outfile=dist/index.min.js",
-    "build": "esbuild src/index.js --bundle  --outfile=dist/index.js",
+    "prod": "esbuild src/index.js --bundle --minify --format=esm --outfile=dist/index.min.js",
+    "build": "esbuild src/index.js --bundle --format=esm --outfile=dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
