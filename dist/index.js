@@ -1,3 +1,318 @@
+// node_modules/preact/dist/preact.module.js
+var n;
+var l;
+var u;
+var t;
+var i;
+var r;
+var o;
+var e;
+var f;
+var c;
+var a;
+var s;
+var h;
+var p;
+var v;
+var y;
+var d = {};
+var w = [];
+var _ = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;
+var g = Array.isArray;
+function m(n2, l2) {
+  for (var u3 in l2)
+    n2[u3] = l2[u3];
+  return n2;
+}
+function b(n2) {
+  n2 && n2.parentNode && n2.parentNode.removeChild(n2);
+}
+function k(l2, u3, t3) {
+  var i3, r3, o3, e2 = {};
+  for (o3 in u3)
+    "key" == o3 ? i3 = u3[o3] : "ref" == o3 ? r3 = u3[o3] : e2[o3] = u3[o3];
+  if (arguments.length > 2 && (e2.children = arguments.length > 3 ? n.call(arguments, 2) : t3), "function" == typeof l2 && null != l2.defaultProps)
+    for (o3 in l2.defaultProps)
+      void 0 === e2[o3] && (e2[o3] = l2.defaultProps[o3]);
+  return x(l2, e2, i3, r3, null);
+}
+function x(n2, t3, i3, r3, o3) {
+  var e2 = { type: n2, props: t3, key: i3, ref: r3, __k: null, __: null, __b: 0, __e: null, __c: null, constructor: void 0, __v: null == o3 ? ++u : o3, __i: -1, __u: 0 };
+  return null == o3 && null != l.vnode && l.vnode(e2), e2;
+}
+function S(n2) {
+  return n2.children;
+}
+function C(n2, l2) {
+  this.props = n2, this.context = l2;
+}
+function $(n2, l2) {
+  if (null == l2)
+    return n2.__ ? $(n2.__, n2.__i + 1) : null;
+  for (var u3; l2 < n2.__k.length; l2++)
+    if (null != (u3 = n2.__k[l2]) && null != u3.__e)
+      return u3.__e;
+  return "function" == typeof n2.type ? $(n2) : null;
+}
+function I(n2) {
+  if (n2.__P && n2.__d) {
+    var u3 = n2.__v, t3 = u3.__e, i3 = [], r3 = [], o3 = m({}, u3);
+    o3.__v = u3.__v + 1, l.vnode && l.vnode(o3), q(n2.__P, o3, u3, n2.__n, n2.__P.namespaceURI, 32 & u3.__u ? [t3] : null, i3, null == t3 ? $(u3) : t3, !!(32 & u3.__u), r3), o3.__v = u3.__v, o3.__.__k[o3.__i] = o3, D(i3, o3, r3), u3.__e = u3.__ = null, o3.__e != t3 && P(o3);
+  }
+}
+function P(n2) {
+  if (null != (n2 = n2.__) && null != n2.__c)
+    return n2.__e = n2.__c.base = null, n2.__k.some(function(l2) {
+      if (null != l2 && null != l2.__e)
+        return n2.__e = n2.__c.base = l2.__e;
+    }), P(n2);
+}
+function A(n2) {
+  (!n2.__d && (n2.__d = true) && i.push(n2) && !H.__r++ || r != l.debounceRendering) && ((r = l.debounceRendering) || o)(H);
+}
+function H() {
+  try {
+    for (var n2, l2 = 1; i.length; )
+      i.length > l2 && i.sort(e), n2 = i.shift(), l2 = i.length, I(n2);
+  } finally {
+    i.length = H.__r = 0;
+  }
+}
+function L(n2, l2, u3, t3, i3, r3, o3, e2, f3, c2, a2) {
+  var s3, h2, p3, v2, y2, _2, g3, m2 = t3 && t3.__k || w, b2 = l2.length;
+  for (f3 = T(u3, l2, m2, f3, b2), s3 = 0; s3 < b2; s3++)
+    null != (p3 = u3.__k[s3]) && (h2 = -1 != p3.__i && m2[p3.__i] || d, p3.__i = s3, _2 = q(n2, p3, h2, i3, r3, o3, e2, f3, c2, a2), v2 = p3.__e, p3.ref && h2.ref != p3.ref && (h2.ref && J(h2.ref, null, p3), a2.push(p3.ref, p3.__c || v2, p3)), null == y2 && null != v2 && (y2 = v2), (g3 = !!(4 & p3.__u)) || h2.__k === p3.__k ? (f3 = j(p3, f3, n2, g3), g3 && h2.__e && (h2.__e = null)) : "function" == typeof p3.type && void 0 !== _2 ? f3 = _2 : v2 && (f3 = v2.nextSibling), p3.__u &= -7);
+  return u3.__e = y2, f3;
+}
+function T(n2, l2, u3, t3, i3) {
+  var r3, o3, e2, f3, c2, a2 = u3.length, s3 = a2, h2 = 0;
+  for (n2.__k = new Array(i3), r3 = 0; r3 < i3; r3++)
+    null != (o3 = l2[r3]) && "boolean" != typeof o3 && "function" != typeof o3 ? ("string" == typeof o3 || "number" == typeof o3 || "bigint" == typeof o3 || o3.constructor == String ? o3 = n2.__k[r3] = x(null, o3, null, null, null) : g(o3) ? o3 = n2.__k[r3] = x(S, { children: o3 }, null, null, null) : void 0 === o3.constructor && o3.__b > 0 ? o3 = n2.__k[r3] = x(o3.type, o3.props, o3.key, o3.ref ? o3.ref : null, o3.__v) : n2.__k[r3] = o3, f3 = r3 + h2, o3.__ = n2, o3.__b = n2.__b + 1, e2 = null, -1 != (c2 = o3.__i = O(o3, u3, f3, s3)) && (s3--, (e2 = u3[c2]) && (e2.__u |= 2)), null == e2 || null == e2.__v ? (-1 == c2 && (i3 > a2 ? h2-- : i3 < a2 && h2++), "function" != typeof o3.type && (o3.__u |= 4)) : c2 != f3 && (c2 == f3 - 1 ? h2-- : c2 == f3 + 1 ? h2++ : (c2 > f3 ? h2-- : h2++, o3.__u |= 4))) : n2.__k[r3] = null;
+  if (s3)
+    for (r3 = 0; r3 < a2; r3++)
+      null != (e2 = u3[r3]) && 0 == (2 & e2.__u) && (e2.__e == t3 && (t3 = $(e2)), K(e2, e2));
+  return t3;
+}
+function j(n2, l2, u3, t3) {
+  var i3, r3;
+  if ("function" == typeof n2.type) {
+    for (i3 = n2.__k, r3 = 0; i3 && r3 < i3.length; r3++)
+      i3[r3] && (i3[r3].__ = n2, l2 = j(i3[r3], l2, u3, t3));
+    return l2;
+  }
+  n2.__e != l2 && (t3 && (l2 && n2.type && !l2.parentNode && (l2 = $(n2)), u3.insertBefore(n2.__e, l2 || null)), l2 = n2.__e);
+  do {
+    l2 = l2 && l2.nextSibling;
+  } while (null != l2 && 8 == l2.nodeType);
+  return l2;
+}
+function O(n2, l2, u3, t3) {
+  var i3, r3, o3, e2 = n2.key, f3 = n2.type, c2 = l2[u3], a2 = null != c2 && 0 == (2 & c2.__u);
+  if (null === c2 && null == e2 || a2 && e2 == c2.key && f3 == c2.type)
+    return u3;
+  if (t3 > (a2 ? 1 : 0)) {
+    for (i3 = u3 - 1, r3 = u3 + 1; i3 >= 0 || r3 < l2.length; )
+      if (null != (c2 = l2[o3 = i3 >= 0 ? i3-- : r3++]) && 0 == (2 & c2.__u) && e2 == c2.key && f3 == c2.type)
+        return o3;
+  }
+  return -1;
+}
+function z(n2, l2, u3) {
+  "-" == l2[0] ? n2.setProperty(l2, null == u3 ? "" : u3) : n2[l2] = null == u3 ? "" : "number" != typeof u3 || _.test(l2) ? u3 : u3 + "px";
+}
+function N(n2, l2, u3, t3, i3) {
+  var r3, o3;
+  n:
+    if ("style" == l2)
+      if ("string" == typeof u3)
+        n2.style.cssText = u3;
+      else {
+        if ("string" == typeof t3 && (n2.style.cssText = t3 = ""), t3)
+          for (l2 in t3)
+            u3 && l2 in u3 || z(n2.style, l2, "");
+        if (u3)
+          for (l2 in u3)
+            t3 && u3[l2] == t3[l2] || z(n2.style, l2, u3[l2]);
+      }
+    else if ("o" == l2[0] && "n" == l2[1])
+      r3 = l2 != (l2 = l2.replace(s, "$1")), o3 = l2.toLowerCase(), l2 = o3 in n2 || "onFocusOut" == l2 || "onFocusIn" == l2 ? o3.slice(2) : l2.slice(2), n2.l || (n2.l = {}), n2.l[l2 + r3] = u3, u3 ? t3 ? u3[a] = t3[a] : (u3[a] = h, n2.addEventListener(l2, r3 ? v : p, r3)) : n2.removeEventListener(l2, r3 ? v : p, r3);
+    else {
+      if ("http://www.w3.org/2000/svg" == i3)
+        l2 = l2.replace(/xlink(H|:h)/, "h").replace(/sName$/, "s");
+      else if ("width" != l2 && "height" != l2 && "href" != l2 && "list" != l2 && "form" != l2 && "tabIndex" != l2 && "download" != l2 && "rowSpan" != l2 && "colSpan" != l2 && "role" != l2 && "popover" != l2 && l2 in n2)
+        try {
+          n2[l2] = null == u3 ? "" : u3;
+          break n;
+        } catch (n3) {
+        }
+      "function" == typeof u3 || (null == u3 || false === u3 && "-" != l2[4] ? n2.removeAttribute(l2) : n2.setAttribute(l2, "popover" == l2 && 1 == u3 ? "" : u3));
+    }
+}
+function V(n2) {
+  return function(u3) {
+    if (this.l) {
+      var t3 = this.l[u3.type + n2];
+      if (null == u3[c])
+        u3[c] = h++;
+      else if (u3[c] < t3[a])
+        return;
+      return t3(l.event ? l.event(u3) : u3);
+    }
+  };
+}
+function q(n2, u3, t3, i3, r3, o3, e2, f3, c2, a2) {
+  var s3, h2, p3, v2, y2, d2, _2, k2, x3, M, $2, I2, P3, A3, H2, T2, j2 = u3.type;
+  if (void 0 !== u3.constructor)
+    return null;
+  128 & t3.__u && (c2 = !!(32 & t3.__u), o3 = [f3 = u3.__e = t3.__e]), (s3 = l.__b) && s3(u3);
+  n:
+    if ("function" == typeof j2) {
+      h2 = e2.length;
+      try {
+        if (x3 = u3.props, M = j2.prototype && j2.prototype.render, $2 = (s3 = j2.contextType) && i3[s3.__c], I2 = s3 ? $2 ? $2.props.value : s3.__ : i3, t3.__c ? k2 = (p3 = u3.__c = t3.__c).__ = p3.__E : (M ? u3.__c = p3 = new j2(x3, I2) : (u3.__c = p3 = new C(x3, I2), p3.constructor = j2, p3.render = Q), $2 && $2.sub(p3), p3.state || (p3.state = {}), p3.__n = i3, v2 = p3.__d = true, p3.__h = [], p3._sb = []), M && null == p3.__s && (p3.__s = p3.state), M && null != j2.getDerivedStateFromProps && (p3.__s == p3.state && (p3.__s = m({}, p3.__s)), m(p3.__s, j2.getDerivedStateFromProps(x3, p3.__s))), y2 = p3.props, d2 = p3.state, p3.__v = u3, v2)
+          M && null == j2.getDerivedStateFromProps && null != p3.componentWillMount && p3.componentWillMount(), M && null != p3.componentDidMount && p3.__h.push(p3.componentDidMount);
+        else {
+          if (M && null == j2.getDerivedStateFromProps && x3 !== y2 && null != p3.componentWillReceiveProps && p3.componentWillReceiveProps(x3, I2), u3.__v == t3.__v || !p3.__e && null != p3.shouldComponentUpdate && false === p3.shouldComponentUpdate(x3, p3.__s, I2)) {
+            u3.__v != t3.__v && (p3.props = x3, p3.state = p3.__s, p3.__d = false), u3.__e = t3.__e, u3.__k = t3.__k, u3.__k.some(function(n3) {
+              n3 && (n3.__ = u3);
+            }), w.push.apply(p3.__h, p3._sb), p3._sb = [], p3.__h.length && e2.push(p3);
+            break n;
+          }
+          null != p3.componentWillUpdate && p3.componentWillUpdate(x3, p3.__s, I2), M && null != p3.componentDidUpdate && p3.__h.push(function() {
+            p3.componentDidUpdate(y2, d2, _2);
+          });
+        }
+        if (p3.context = I2, p3.props = x3, p3.__P = n2, p3.__e = false, P3 = l.__r, A3 = 0, M)
+          p3.state = p3.__s, p3.__d = false, P3 && P3(u3), s3 = p3.render(p3.props, p3.state, p3.context), w.push.apply(p3.__h, p3._sb), p3._sb = [];
+        else
+          do {
+            p3.__d = false, P3 && P3(u3), s3 = p3.render(p3.props, p3.state, p3.context), p3.state = p3.__s;
+          } while (p3.__d && ++A3 < 25);
+        p3.state = p3.__s, null != p3.getChildContext && (i3 = m(m({}, i3), p3.getChildContext())), M && !v2 && null != p3.getSnapshotBeforeUpdate && (_2 = p3.getSnapshotBeforeUpdate(y2, d2)), H2 = null != s3 && s3.type === S && null == s3.key ? E(s3.props.children) : s3, f3 = L(n2, g(H2) ? H2 : [H2], u3, t3, i3, r3, o3, e2, f3, c2, a2), p3.base = u3.__e, u3.__u &= -161, p3.__h.length && e2.push(p3), k2 && (p3.__E = p3.__ = null);
+      } catch (n3) {
+        if (e2.length = h2, u3.__v = null, c2 || null != o3) {
+          if (n3.then) {
+            for (u3.__u |= c2 ? 160 : 128; f3 && 8 == f3.nodeType && f3.nextSibling; )
+              f3 = f3.nextSibling;
+            null != o3 && (o3[o3.indexOf(f3)] = null), u3.__e = f3;
+          } else if (null != o3)
+            for (T2 = o3.length; T2--; )
+              b(o3[T2]);
+        } else
+          u3.__e = t3.__e;
+        null == u3.__k && (u3.__k = t3.__k || []), n3.then || B(u3), l.__e(n3, u3, t3);
+      }
+    } else
+      null == o3 && u3.__v == t3.__v ? (u3.__k = t3.__k, u3.__e = t3.__e) : f3 = u3.__e = G(t3.__e, u3, t3, i3, r3, o3, e2, c2, a2);
+  return (s3 = l.diffed) && s3(u3), 128 & u3.__u ? void 0 : f3;
+}
+function B(n2) {
+  n2 && (n2.__c && (n2.__c.__e = true), n2.__k && n2.__k.some(B));
+}
+function D(n2, u3, t3) {
+  for (var i3 = 0; i3 < t3.length; i3++)
+    J(t3[i3], t3[++i3], t3[++i3]);
+  l.__c && l.__c(u3, n2), n2.some(function(u4) {
+    try {
+      n2 = u4.__h, u4.__h = [], n2.some(function(n3) {
+        n3.call(u4);
+      });
+    } catch (n3) {
+      l.__e(n3, u4.__v);
+    }
+  });
+}
+function E(n2) {
+  return "object" != typeof n2 || null == n2 || n2.__b > 0 ? n2 : g(n2) ? n2.map(E) : void 0 !== n2.constructor ? null : m({}, n2);
+}
+function G(u3, t3, i3, r3, o3, e2, f3, c2, a2) {
+  var s3, h2, p3, v2, y2, w3, _2, m2 = i3.props || d, k2 = t3.props, x3 = t3.type;
+  if ("svg" == x3 ? o3 = "http://www.w3.org/2000/svg" : "math" == x3 ? o3 = "http://www.w3.org/1998/Math/MathML" : o3 || (o3 = "http://www.w3.org/1999/xhtml"), null != e2) {
+    for (s3 = 0; s3 < e2.length; s3++)
+      if ((y2 = e2[s3]) && "setAttribute" in y2 == !!x3 && (x3 ? y2.localName == x3 : 3 == y2.nodeType)) {
+        u3 = y2, e2[s3] = null;
+        break;
+      }
+  }
+  if (null == u3) {
+    if (null == x3)
+      return document.createTextNode(k2);
+    u3 = document.createElementNS(o3, x3, k2.is && k2), c2 && (l.__m && l.__m(t3, e2), c2 = false), e2 = null;
+  }
+  if (null == x3)
+    m2 === k2 || c2 && u3.data == k2 || (u3.data = k2);
+  else {
+    if (e2 = "textarea" == x3 && null != k2.defaultValue ? null : e2 && n.call(u3.childNodes), !c2 && null != e2)
+      for (m2 = {}, s3 = 0; s3 < u3.attributes.length; s3++)
+        m2[(y2 = u3.attributes[s3]).name] = y2.value;
+    for (s3 in m2)
+      y2 = m2[s3], "dangerouslySetInnerHTML" == s3 ? p3 = y2 : "children" == s3 || s3 in k2 || "value" == s3 && "defaultValue" in k2 || "checked" == s3 && "defaultChecked" in k2 || N(u3, s3, null, y2, o3);
+    for (s3 in k2)
+      y2 = k2[s3], "children" == s3 ? v2 = y2 : "dangerouslySetInnerHTML" == s3 ? h2 = y2 : "value" == s3 ? w3 = y2 : "checked" == s3 ? _2 = y2 : c2 && "function" != typeof y2 || m2[s3] === y2 || N(u3, s3, y2, m2[s3], o3);
+    if (h2)
+      c2 || p3 && (h2.__html == p3.__html || h2.__html == u3.innerHTML) || (u3.innerHTML = h2.__html), t3.__k = [];
+    else if (p3 && (u3.innerHTML = ""), L("template" == t3.type ? u3.content : u3, g(v2) ? v2 : [v2], t3, i3, r3, "foreignObject" == x3 ? "http://www.w3.org/1999/xhtml" : o3, e2, f3, e2 ? e2[0] : i3.__k && $(i3, 0), c2, a2), null != e2)
+      for (s3 = e2.length; s3--; )
+        b(e2[s3]);
+    c2 && "textarea" != x3 || (s3 = "value", "progress" == x3 && null == w3 ? u3.removeAttribute("value") : null != w3 && (w3 !== u3[s3] || "progress" == x3 && !w3 || "option" == x3 && w3 != m2[s3]) && N(u3, s3, w3, m2[s3], o3), s3 = "checked", null != _2 && _2 != u3[s3] && N(u3, s3, _2, m2[s3], o3));
+  }
+  return u3;
+}
+function J(n2, u3, t3) {
+  try {
+    if ("function" == typeof n2) {
+      var i3 = "function" == typeof n2.__u;
+      i3 && n2.__u(), i3 && null == u3 || (n2.__u = n2(u3));
+    } else
+      n2.current = u3;
+  } catch (n3) {
+    l.__e(n3, t3);
+  }
+}
+function K(n2, u3, t3) {
+  var i3, r3;
+  if (l.unmount && l.unmount(n2), (i3 = n2.ref) && (i3.current && i3.current != n2.__e || J(i3, null, u3)), null != (i3 = n2.__c)) {
+    if (i3.componentWillUnmount)
+      try {
+        i3.componentWillUnmount();
+      } catch (n3) {
+        l.__e(n3, u3);
+      }
+    i3.base = i3.__P = i3.__n = null;
+  }
+  if (i3 = n2.__k)
+    for (r3 = 0; r3 < i3.length; r3++)
+      i3[r3] && K(i3[r3], u3, t3 || "function" != typeof n2.type);
+  t3 || b(n2.__e), n2.__c = n2.__ = n2.__e = void 0;
+}
+function Q(n2, l2, u3) {
+  return this.constructor(n2, u3);
+}
+function R(u3, t3, i3) {
+  var r3, o3, e2, f3;
+  t3 == document && (t3 = document.documentElement), l.__ && l.__(u3, t3), o3 = (r3 = "function" == typeof i3) ? null : i3 && i3.__k || t3.__k, e2 = [], f3 = [], q(t3, u3 = (!r3 && i3 || t3).__k = k(S, null, [u3]), o3 || d, d, t3.namespaceURI, !r3 && i3 ? [i3] : o3 ? null : t3.firstChild ? n.call(t3.childNodes) : null, e2, !r3 && i3 ? i3 : o3 ? o3.__e : t3.firstChild, r3, f3), D(e2, u3, f3), u3.props.children = null;
+}
+n = w.slice, l = { __e: function(n2, l2, u3, t3) {
+  for (var i3, r3, o3; l2 = l2.__; )
+    if ((i3 = l2.__c) && !i3.__)
+      try {
+        if ((r3 = i3.constructor) && null != r3.getDerivedStateFromError && (i3.setState(r3.getDerivedStateFromError(n2)), o3 = i3.__d), null != i3.componentDidCatch && (i3.componentDidCatch(n2, t3 || {}), o3 = i3.__d), o3)
+          return i3.__E = i3;
+      } catch (l3) {
+        n2 = l3;
+      }
+  throw n2;
+} }, u = 0, t = function(n2) {
+  return null != n2 && void 0 === n2.constructor;
+}, C.prototype.setState = function(n2, l2) {
+  var u3;
+  u3 = null != this.__s && this.__s != this.state ? this.__s : this.__s = m({}, this.state), "function" == typeof n2 && (n2 = n2(m({}, u3), this.props)), n2 && m(u3, n2), null != n2 && this.__v && (l2 && this._sb.push(l2), A(this));
+}, C.prototype.forceUpdate = function(n2) {
+  this.__v && (this.__e = true, n2 && this.__h.push(n2), A(this));
+}, C.prototype.render = S, i = [], o = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, e = function(n2, l2) {
+  return n2.__v.__b - l2.__v.__b;
+}, H.__r = 0, f = Math.random().toString(8), c = "__d" + f, a = "__a" + f, s = /(PointerCapture)$|Capture$/i, h = 0, p = V(false), v = V(true), y = 0;
+
 // src/components/AppElement.js
 var AppElement = class extends HTMLElement {
   #default = {};
@@ -52,7 +367,7 @@ var AppElement = class extends HTMLElement {
    * @returns  {String}
    */
   camelCase2attribute(camelCase) {
-    return camelCase.replace(new RegExp("-([a-z])", "g"), (m, c) => c.toUpperCase());
+    return camelCase.replace(new RegExp("-([a-z])", "g"), (m2, c2) => c2.toUpperCase());
   }
   /**
    * Initializes the component state and renders it.
@@ -93,7 +408,27 @@ var AppElement = class extends HTMLElement {
     }
   }
   /**
-   * 
+   * Same as setAnimation but returns a plain object of data- attributes
+   * to spread onto a JSX element instead of a literal HTML string
+   *
+   * @param {Object} props Attributes to define animation
+   * @returns {Object}
+   */
+  getAnimationProps(props) {
+    if (props === void 0 || props === null) {
+      return {};
+    }
+    let attrs = { "data-animation": props.effect };
+    if (props.delay != void 0)
+      attrs["data-delay"] = props.delay;
+    if (props.speed != void 0)
+      attrs["data-speed"] = props.speed;
+    if (props.repeat != void 0)
+      attrs["data-repeat"] = props.repeat;
+    return attrs;
+  }
+  /**
+   *
    */
   cleanValue(prop) {
     return prop != void 0 ? prop : "";
@@ -126,7 +461,19 @@ var AppElement = class extends HTMLElement {
     return classes;
   }
   /**
-   * 
+   * Add the additional classes sent to the component props, as a plain
+   * space separated string suitable for JSX's `class` attribute
+   *
+   * @param {string} defaultClass
+   * @param {string} optionalClasses
+   * @returns {string|undefined}
+   */
+  getClassNames(defaultClass = [], optionalClasses) {
+    let resultClasses = optionalClasses === void 0 ? defaultClass : [...defaultClass, ...optionalClasses];
+    return resultClasses.length > 0 ? resultClasses.join(" ") : void 0;
+  }
+  /**
+   *
    * @returns {string} The styles needed to add the background image
    */
   getBackground() {
@@ -143,6 +490,25 @@ var AppElement = class extends HTMLElement {
       style = "";
     }
     return ` style="${style}"`;
+  }
+  /**
+   * Same as getBackground but returns the bare CSS text (no `style="..."`
+   * wrapper) suitable for JSX's `style` attribute
+   *
+   * @returns {string|undefined}
+   */
+  getBackgroundStyle() {
+    let style = "";
+    if (this.state.backgroundImage?.url != void 0) {
+      style = `background-image: url('${this.state.backgroundImage.url}'); background-repeat: no-repeat; background-position: center; background-size: cover;`;
+      if (this.state.backgroundImage?.fixed) {
+        style = `${style} background-attachment: fixed;`;
+      }
+      if (this.state.backgroundImage?.filter) {
+        style = `${style} filter: ${this.state.backgroundImage?.filter};`;
+      }
+    }
+    return style || void 0;
   }
   /**
   * Generate caption, title and subtitle of the component
@@ -162,6 +528,20 @@ var AppElement = class extends HTMLElement {
             </div>`;
     }
     return titles;
+  }
+  /**
+   * Same as getTitles but returns a Preact vnode tree instead of an HTML
+   * string, for use directly inside a component's JSX render()
+   */
+  getTitlesJSX() {
+    if (this.state === void 0)
+      return null;
+    const lang = this.state.context.lang;
+    return k("div", { class: "content" }, [
+      this.state.caption?.text[lang] != void 0 ? k("h2", { class: this.getClassNames(["subtitle"], this.state.caption?.classList), ...this.getAnimationProps(this.state.caption?.animation) }, this.state.caption.text[lang]) : null,
+      this.state.title?.text[lang] != void 0 ? k("h1", { class: this.getClassNames([], this.state.title?.classList), ...this.getAnimationProps(this.state.title?.animation) }, this.state.title.text[lang]) : null,
+      this.state.subtitle?.text[lang] != void 0 ? k("h2", { class: this.getClassNames([], this.state.subtitle?.classList), ...this.getAnimationProps(this.state.subtitle?.animation) }, this.state.subtitle.text[lang]) : null
+    ]);
   }
   handleEvent(event) {
     if (event.type === "click") {
@@ -219,6 +599,29 @@ var AppElement = class extends HTMLElement {
     } else
       return "";
   }
+  /**
+   * Same as #getButtons but returns an array of Preact vnodes
+   * @param {Object} props
+   */
+  #getButtonsJSX(props) {
+    if (props === void 0)
+      return [];
+    return props.map((el) => k(
+      el.href != void 0 ? "a" : "button",
+      { key: el.id, id: el.id, class: this.getClassNames(["button"], el.classList), href: el.href },
+      el?.text[this.state.context.lang]
+    ));
+  }
+  /**
+   * Same as buttonsRender but returns a Preact vnode tree instead of an
+   * HTML string, for use directly inside a component's JSX render()
+   * @param {Object} props
+   */
+  buttonsRenderJSX(props) {
+    if (props === void 0)
+      return null;
+    return k("p", { class: this.getClassNames(["buttons", "mt-4"], props.classList) }, this.#getButtonsJSX(props.buttons));
+  }
   addCleanup(callback) {
     if (typeof callback !== "function")
       return () => {
@@ -262,7 +665,7 @@ var AppElement = class extends HTMLElement {
 };
 customElements.define("app-element", AppElement);
 
-// src/components/AppPage.js
+// src/components/AppPage.jsx
 var AppPage = class extends AppElement {
   #default = {
     events: {
@@ -573,10 +976,10 @@ var AppPage = class extends AppElement {
     this.#runRenderCleanups();
     if (Array.isArray(this.data.props.events.trackViewed)) {
       let sections = this.#getOrderedIdsFromTemplate(this.template, this.data.props.events.trackViewed);
-      let i = 0;
+      let i3 = 0;
       sections.forEach((id) => {
-        this.scrollStopping.sections[id] = { order: i, start: 0, end: 0, time: 0, views: 0 };
-        i++;
+        this.scrollStopping.sections[id] = { order: i3, start: 0, end: 0, time: 0, views: 0 };
+        i3++;
       });
       const observerSections = new IntersectionObserver(
         (entries) => {
@@ -617,8 +1020,8 @@ var AppPage = class extends AppElement {
         bubbles: true,
         composed: true
       });
-      const handleMouseLeave = (e) => {
-        if (e.clientY <= 0 || e.clientX <= 0 || (e.clientX >= window.innerWidth || e.clientY >= window.innerHeight)) {
+      const handleMouseLeave = (e2) => {
+        if (e2.clientY <= 0 || e2.clientX <= 0 || (e2.clientX >= window.innerWidth || e2.clientY >= window.innerHeight)) {
           this.dispatchEvent(leavingApp);
         }
       };
@@ -715,8 +1118,8 @@ function generateSessionToken(length = 32) {
   const randomValues = new Uint8Array(length);
   crypto.getRandomValues(randomValues);
   let sessionId = "";
-  for (let i = 0; i < length; i++) {
-    const randomIndex = randomValues[i] % characters.length;
+  for (let i3 = 0; i3 < length; i3++) {
+    const randomIndex = randomValues[i3] % characters.length;
     sessionId += characters[randomIndex];
   }
   return sessionId;
@@ -769,7 +1172,23 @@ function loading(props) {
   document.body.innerHTML += `<div class="pageloader ${props?.color != void 0 ? props.color : `is-light`} ${dir != void 0 ? dir : ""} is-active"><span class="title">${props.message != void 0 ? props.message : "Loading..."}</span></div>`;
 }
 
-// src/components/PageFooter.js
+// node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js
+var f2 = 0;
+var i2 = Array.isArray;
+function u2(e2, t3, n2, o3, i3, u3) {
+  t3 || (t3 = {});
+  var a2, c2, p3 = t3;
+  if ("ref" in p3)
+    for (c2 in p3 = {}, t3)
+      "ref" == c2 ? a2 = t3[c2] : p3[c2] = t3[c2];
+  var l2 = { type: e2, props: p3, key: n2, ref: a2, __k: null, __: null, __b: 0, __e: null, __c: null, constructor: void 0, __v: --f2, __i: -1, __u: 0, __source: i3, __self: u3 };
+  if ("function" == typeof e2 && (a2 = e2.defaultProps))
+    for (c2 in a2)
+      void 0 === p3[c2] && (p3[c2] = a2[c2]);
+  return l.vnode && l.vnode(l2), l2;
+}
+
+// src/components/PageFooter.jsx
 var PageFooter = class extends AppElement {
   #default = {
     brand: {
@@ -783,68 +1202,70 @@ var PageFooter = class extends AppElement {
     this.getAttribute("id") || this.setAttribute("id", this.state.id || `component-${Math.floor(Math.random() * 100)}`);
   }
   render() {
-    this.innerHTML = /* html */
-    `
-        <footer ${this.getClasses(["footer"], this.state.classList)} >
-            <div class="content has-text-centered">
-                    <img  src="${this.state.context?.theme === "light" ? this.state.brand?.src : this.state.brand?.srcDark === void 0 ? this.state.brand?.src : this.state.brand?.srcDark}" style="max-width:200px">
-                <p>${this.state.content?.text[this.state.context.lang]}</p>
-                <p><a href="${this.state.privacyPolicy?.url}">${this.state.privacyPolicy?.text === void 0 ? "" : this.state.privacyPolicy?.text[this.state.context.lang]}</a></p>
-            </div>
-            <div class="has-text-left" >
-                <h4>Powered by <a href="${this.state.brand?.url}">${this.state.brand.name}</a></h4>
-            </div>
-        </footer>
-        `;
+    let logo = this.state.context?.theme === "light" ? this.state.brand?.src : this.state.brand?.srcDark === void 0 ? this.state.brand?.src : this.state.brand?.srcDark;
+    R(
+      /* @__PURE__ */ u2("footer", { class: this.getClassNames(["footer"], this.state.classList), children: [
+        /* @__PURE__ */ u2("div", { class: "content has-text-centered", children: [
+          /* @__PURE__ */ u2("img", { src: logo, style: "max-width:200px" }),
+          /* @__PURE__ */ u2("p", { children: this.state.content?.text[this.state.context.lang] }),
+          /* @__PURE__ */ u2("p", { children: /* @__PURE__ */ u2("a", { href: this.state.privacyPolicy?.url, children: this.state.privacyPolicy?.text === void 0 ? "" : this.state.privacyPolicy.text[this.state.context.lang] }) })
+        ] }),
+        /* @__PURE__ */ u2("div", { class: "has-text-left", children: /* @__PURE__ */ u2("h4", { children: [
+          "Powered by ",
+          /* @__PURE__ */ u2("a", { href: this.state.brand?.url, children: this.state.brand.name })
+        ] }) })
+      ] }),
+      this
+    );
   }
 };
 customElements.define("page-footer", PageFooter);
 
 // node_modules/@fortawesome/fontawesome-svg-core/index.mjs
-function _defineProperty(e, r2, t2) {
-  return (r2 = _toPropertyKey(r2)) in e ? Object.defineProperty(e, r2, {
-    value: t2,
+function _defineProperty(e2, r3, t3) {
+  return (r3 = _toPropertyKey(r3)) in e2 ? Object.defineProperty(e2, r3, {
+    value: t3,
     enumerable: true,
     configurable: true,
     writable: true
-  }) : e[r2] = t2, e;
+  }) : e2[r3] = t3, e2;
 }
-function ownKeys(e, r2) {
-  var t2 = Object.keys(e);
+function ownKeys(e2, r3) {
+  var t3 = Object.keys(e2);
   if (Object.getOwnPropertySymbols) {
-    var o2 = Object.getOwnPropertySymbols(e);
-    r2 && (o2 = o2.filter(function(r3) {
-      return Object.getOwnPropertyDescriptor(e, r3).enumerable;
-    })), t2.push.apply(t2, o2);
+    var o3 = Object.getOwnPropertySymbols(e2);
+    r3 && (o3 = o3.filter(function(r4) {
+      return Object.getOwnPropertyDescriptor(e2, r4).enumerable;
+    })), t3.push.apply(t3, o3);
   }
-  return t2;
+  return t3;
 }
-function _objectSpread2(e) {
-  for (var r2 = 1; r2 < arguments.length; r2++) {
-    var t2 = null != arguments[r2] ? arguments[r2] : {};
-    r2 % 2 ? ownKeys(Object(t2), true).forEach(function(r3) {
-      _defineProperty(e, r3, t2[r3]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t2)) : ownKeys(Object(t2)).forEach(function(r3) {
-      Object.defineProperty(e, r3, Object.getOwnPropertyDescriptor(t2, r3));
+function _objectSpread2(e2) {
+  for (var r3 = 1; r3 < arguments.length; r3++) {
+    var t3 = null != arguments[r3] ? arguments[r3] : {};
+    r3 % 2 ? ownKeys(Object(t3), true).forEach(function(r4) {
+      _defineProperty(e2, r4, t3[r4]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e2, Object.getOwnPropertyDescriptors(t3)) : ownKeys(Object(t3)).forEach(function(r4) {
+      Object.defineProperty(e2, r4, Object.getOwnPropertyDescriptor(t3, r4));
     });
   }
-  return e;
+  return e2;
 }
-function _toPrimitive(t2, r2) {
-  if ("object" != typeof t2 || !t2)
-    return t2;
-  var e = t2[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t2, r2 || "default");
-    if ("object" != typeof i)
-      return i;
+function _toPrimitive(t3, r3) {
+  if ("object" != typeof t3 || !t3)
+    return t3;
+  var e2 = t3[Symbol.toPrimitive];
+  if (void 0 !== e2) {
+    var i3 = e2.call(t3, r3 || "default");
+    if ("object" != typeof i3)
+      return i3;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
-  return ("string" === r2 ? String : Number)(t2);
+  return ("string" === r3 ? String : Number)(t3);
 }
-function _toPropertyKey(t2) {
-  var i = _toPrimitive(t2, "string");
-  return "symbol" == typeof i ? i : i + "";
+function _toPropertyKey(t3) {
+  var i3 = _toPrimitive(t3, "string");
+  return "symbol" == typeof i3 ? i3 : i3 + "";
 }
 var noop = () => {
 };
@@ -864,7 +1285,7 @@ try {
     _MUTATION_OBSERVER = MutationObserver;
   if (typeof performance !== "undefined")
     _PERFORMANCE = performance;
-} catch (e) {
+} catch (e2) {
 }
 var {
   userAgent = ""
@@ -876,9 +1297,9 @@ var PERFORMANCE = _PERFORMANCE;
 var IS_BROWSER = !!WINDOW.document;
 var IS_DOM = !!DOCUMENT.documentElement && !!DOCUMENT.head && typeof DOCUMENT.addEventListener === "function" && typeof DOCUMENT.createElement === "function";
 var IS_IE = ~userAgent.indexOf("MSIE") || ~userAgent.indexOf("Trident/");
-var p = /fa(s|r|l|t|d|dr|dl|dt|b|k|kd|ss|sr|sl|st|sds|sdr|sdl|sdt)?[\-\ ]/;
-var g = /Font ?Awesome ?([56 ]*)(Solid|Regular|Light|Thin|Duotone|Brands|Free|Pro|Sharp Duotone|Sharp|Kit)?.*/i;
-var S = {
+var p2 = /fa(s|r|l|t|d|dr|dl|dt|b|k|kd|ss|sr|sl|st|sds|sdr|sdl|sdt)?[\-\ ]/;
+var g2 = /Font ?Awesome ?([56 ]*)(Solid|Regular|Light|Thin|Duotone|Brands|Free|Pro|Sharp Duotone|Sharp|Kit)?.*/i;
+var S2 = {
   classic: {
     fa: "solid",
     fas: "solid",
@@ -927,19 +1348,19 @@ var S = {
     "fa-thin": "thin"
   }
 };
-var A = {
+var A2 = {
   GROUP: "duotone-group",
   SWAP_OPACITY: "swap-opacity",
   PRIMARY: "primary",
   SECONDARY: "secondary"
 };
-var P = ["fa-classic", "fa-duotone", "fa-sharp", "fa-sharp-duotone"];
-var s = "classic";
-var t = "duotone";
-var r = "sharp";
-var o = "sharp-duotone";
-var L = [s, t, r, o];
-var G = {
+var P2 = ["fa-classic", "fa-duotone", "fa-sharp", "fa-sharp-duotone"];
+var s2 = "classic";
+var t2 = "duotone";
+var r2 = "sharp";
+var o2 = "sharp-duotone";
+var L2 = [s2, t2, r2, o2];
+var G2 = {
   classic: {
     900: "fas",
     400: "far",
@@ -1171,12 +1592,12 @@ var ga = {
     fasdt: "fa-thin"
   }
 };
-var x = ["fa-solid", "fa-regular", "fa-light", "fa-thin", "fa-duotone", "fa-brands"];
-var Ia = ["fa", "fas", "far", "fal", "fat", "fad", "fadr", "fadl", "fadt", "fab", "fass", "fasr", "fasl", "fast", "fasds", "fasdr", "fasdl", "fasdt", ...r$1, ...x];
+var x2 = ["fa-solid", "fa-regular", "fa-light", "fa-thin", "fa-duotone", "fa-brands"];
+var Ia = ["fa", "fas", "far", "fal", "fat", "fad", "fadr", "fadl", "fadt", "fab", "fass", "fasr", "fasl", "fast", "fasds", "fasdr", "fasdl", "fasdt", ...r$1, ...x2];
 var m$1 = ["solid", "regular", "light", "thin", "duotone", "brands"];
 var c$1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 var F$1 = c$1.concat([11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);
-var ma = [...Object.keys(I$1), ...m$1, "2xs", "xs", "sm", "lg", "xl", "2xl", "beat", "border", "fade", "beat-fade", "bounce", "flip-both", "flip-horizontal", "flip-vertical", "flip", "fw", "inverse", "layers-counter", "layers-text", "layers", "li", "pull-left", "pull-right", "pulse", "rotate-180", "rotate-270", "rotate-90", "rotate-by", "shake", "spin-pulse", "spin-reverse", "spin", "stack-1x", "stack-2x", "stack", "ul", t$1.GROUP, t$1.SWAP_OPACITY, t$1.PRIMARY, t$1.SECONDARY].concat(c$1.map((a) => "".concat(a, "x"))).concat(F$1.map((a) => "w-".concat(a)));
+var ma = [...Object.keys(I$1), ...m$1, "2xs", "xs", "sm", "lg", "xl", "2xl", "beat", "border", "fade", "beat-fade", "bounce", "flip-both", "flip-horizontal", "flip-vertical", "flip", "fw", "inverse", "layers-counter", "layers-text", "layers", "li", "pull-left", "pull-right", "pulse", "rotate-180", "rotate-270", "rotate-90", "rotate-by", "shake", "spin-pulse", "spin-reverse", "spin", "stack-1x", "stack-2x", "stack", "ul", t$1.GROUP, t$1.SWAP_OPACITY, t$1.PRIMARY, t$1.SECONDARY].concat(c$1.map((a2) => "".concat(a2, "x"))).concat(F$1.map((a2) => "w-".concat(a2)));
 var wa = {
   "Font Awesome 5 Free": {
     900: "fas",
@@ -1218,33 +1639,33 @@ var PRODUCTION = (() => {
 function familyProxy(obj) {
   return new Proxy(obj, {
     get(target, prop) {
-      return prop in target ? target[prop] : target[s];
+      return prop in target ? target[prop] : target[s2];
     }
   });
 }
-var _PREFIX_TO_STYLE = _objectSpread2({}, S);
-_PREFIX_TO_STYLE[s] = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, {
+var _PREFIX_TO_STYLE = _objectSpread2({}, S2);
+_PREFIX_TO_STYLE[s2] = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, {
   "fa-duotone": "duotone"
-}), S[s]), St["kit"]), St["kit-duotone"]);
+}), S2[s2]), St["kit"]), St["kit-duotone"]);
 var PREFIX_TO_STYLE = familyProxy(_PREFIX_TO_STYLE);
 var _STYLE_TO_PREFIX = _objectSpread2({}, xt);
-_STYLE_TO_PREFIX[s] = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, {
+_STYLE_TO_PREFIX[s2] = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, {
   duotone: "fad"
-}), _STYLE_TO_PREFIX[s]), Et["kit"]), Et["kit-duotone"]);
+}), _STYLE_TO_PREFIX[s2]), Et["kit"]), Et["kit-duotone"]);
 var STYLE_TO_PREFIX = familyProxy(_STYLE_TO_PREFIX);
 var _PREFIX_TO_LONG_STYLE = _objectSpread2({}, ga);
-_PREFIX_TO_LONG_STYLE[s] = _objectSpread2(_objectSpread2({}, _PREFIX_TO_LONG_STYLE[s]), Wt["kit"]);
+_PREFIX_TO_LONG_STYLE[s2] = _objectSpread2(_objectSpread2({}, _PREFIX_TO_LONG_STYLE[s2]), Wt["kit"]);
 var PREFIX_TO_LONG_STYLE = familyProxy(_PREFIX_TO_LONG_STYLE);
 var _LONG_STYLE_TO_PREFIX = _objectSpread2({}, ua);
-_LONG_STYLE_TO_PREFIX[s] = _objectSpread2(_objectSpread2({}, _LONG_STYLE_TO_PREFIX[s]), Ct["kit"]);
+_LONG_STYLE_TO_PREFIX[s2] = _objectSpread2(_objectSpread2({}, _LONG_STYLE_TO_PREFIX[s2]), Ct["kit"]);
 var LONG_STYLE_TO_PREFIX = familyProxy(_LONG_STYLE_TO_PREFIX);
-var ICON_SELECTION_SYNTAX_PATTERN = p;
+var ICON_SELECTION_SYNTAX_PATTERN = p2;
 var LAYERS_TEXT_CLASSNAME = "fa-layers-text";
-var FONT_FAMILY_PATTERN = g;
-var _FONT_WEIGHT_TO_PREFIX = _objectSpread2({}, G);
+var FONT_FAMILY_PATTERN = g2;
+var _FONT_WEIGHT_TO_PREFIX = _objectSpread2({}, G2);
 var FONT_WEIGHT_TO_PREFIX = familyProxy(_FONT_WEIGHT_TO_PREFIX);
 var ATTRIBUTES_WATCHED_FOR_MUTATION = ["class", "data-prefix", "data-icon", "data-fa-transform", "data-fa-mask"];
-var DUOTONE_CLASSES = A;
+var DUOTONE_CLASSES = A2;
 var RESERVED_CLASSES = [...At, ...ma];
 var initial = WINDOW.FontAwesomeConfig || {};
 function getAttrConfig(attr) {
@@ -1274,7 +1695,7 @@ if (DOCUMENT && typeof DOCUMENT.querySelector === "function") {
 }
 var _default = {
   styleDefault: "solid",
-  familyDefault: s,
+  familyDefault: s2,
   cssPrefix: DEFAULT_CSS_PREFIX,
   replacementClass: DEFAULT_REPLACEMENT_CLASS,
   autoReplaceSvg: true,
@@ -1342,8 +1763,8 @@ function insertCss(css2) {
   style.innerHTML = css2;
   const headChildren = DOCUMENT.head.childNodes;
   let beforeChild = null;
-  for (let i = headChildren.length - 1; i > -1; i--) {
-    const child = headChildren[i];
+  for (let i3 = headChildren.length - 1; i3 > -1; i3--) {
+    const child = headChildren[i3];
     const tagName = (child.tagName || "").toUpperCase();
     if (["STYLE", "LINK"].indexOf(tagName) > -1) {
       beforeChild = child;
@@ -1363,8 +1784,8 @@ function nextUniqueId() {
 }
 function toArray(obj) {
   const array = [];
-  for (let i = (obj || []).length >>> 0; i--; ) {
-    array[i] = obj[i];
+  for (let i3 = (obj || []).length >>> 0; i3--; ) {
+    array[i3] = obj[i3];
   }
   return array;
 }
@@ -1372,7 +1793,7 @@ function classArray(node) {
   if (node.classList) {
     return toArray(node.classList);
   } else {
-    return (node.getAttribute("class") || "").split(" ").filter((i) => i);
+    return (node.getAttribute("class") || "").split(" ").filter((i3) => i3);
   }
 }
 function htmlEscape(str) {
@@ -1440,14 +1861,14 @@ function css() {
   const drc = DEFAULT_REPLACEMENT_CLASS;
   const fp = config.cssPrefix;
   const rc = config.replacementClass;
-  let s2 = baseStyles;
+  let s3 = baseStyles;
   if (fp !== dcp || rc !== drc) {
     const dPatt = new RegExp("\\.".concat(dcp, "\\-"), "g");
     const customPropPatt = new RegExp("\\--".concat(dcp, "\\-"), "g");
     const rPatt = new RegExp("\\.".concat(drc), "g");
-    s2 = s2.replace(dPatt, ".".concat(fp, "-")).replace(customPropPatt, "--".concat(fp, "-")).replace(rPatt, ".".concat(rc));
+    s3 = s3.replace(dPatt, ".".concat(fp, "-")).replace(customPropPatt, "--".concat(fp, "-")).replace(rPatt, ".".concat(rc));
   }
-  return s2;
+  return s3;
 }
 var _cssInserted = false;
 function ensureCss() {
@@ -1476,16 +1897,16 @@ var InjectCSS = {
     };
   }
 };
-var w = WINDOW || {};
-if (!w[NAMESPACE_IDENTIFIER])
-  w[NAMESPACE_IDENTIFIER] = {};
-if (!w[NAMESPACE_IDENTIFIER].styles)
-  w[NAMESPACE_IDENTIFIER].styles = {};
-if (!w[NAMESPACE_IDENTIFIER].hooks)
-  w[NAMESPACE_IDENTIFIER].hooks = {};
-if (!w[NAMESPACE_IDENTIFIER].shims)
-  w[NAMESPACE_IDENTIFIER].shims = [];
-var namespace = w[NAMESPACE_IDENTIFIER];
+var w2 = WINDOW || {};
+if (!w2[NAMESPACE_IDENTIFIER])
+  w2[NAMESPACE_IDENTIFIER] = {};
+if (!w2[NAMESPACE_IDENTIFIER].styles)
+  w2[NAMESPACE_IDENTIFIER].styles = {};
+if (!w2[NAMESPACE_IDENTIFIER].hooks)
+  w2[NAMESPACE_IDENTIFIER].hooks = {};
+if (!w2[NAMESPACE_IDENTIFIER].shims)
+  w2[NAMESPACE_IDENTIFIER].shims = [];
+var namespace = w2[NAMESPACE_IDENTIFIER];
 var functions = [];
 var listener = function() {
   DOCUMENT.removeEventListener("DOMContentLoaded", listener);
@@ -1525,21 +1946,21 @@ function iconFromMapping(mapping, prefix, iconName) {
   }
 }
 var bindInternal4 = function bindInternal42(func, thisContext) {
-  return function(a, b, c, d) {
-    return func.call(thisContext, a, b, c, d);
+  return function(a2, b2, c2, d2) {
+    return func.call(thisContext, a2, b2, c2, d2);
   };
 };
 var reduce = function fastReduceObject(subject, fn, initialValue, thisContext) {
-  var keys = Object.keys(subject), length = keys.length, iterator = thisContext !== void 0 ? bindInternal4(fn, thisContext) : fn, i, key, result;
+  var keys = Object.keys(subject), length = keys.length, iterator = thisContext !== void 0 ? bindInternal4(fn, thisContext) : fn, i3, key, result;
   if (initialValue === void 0) {
-    i = 1;
+    i3 = 1;
     result = subject[keys[0]];
   } else {
-    i = 0;
+    i3 = 0;
     result = initialValue;
   }
-  for (; i < length; i++) {
-    key = keys[i];
+  for (; i3 < length; i3++) {
+    key = keys[i3];
     result = iterator(result, subject[key], key, subject);
   }
   return result;
@@ -1750,12 +2171,12 @@ var emptyCanonicalIcon = () => {
   };
 };
 function getFamilyId(values) {
-  let family = s;
+  let family = s2;
   const famProps = FAMILY_NAMES.reduce((acc, familyId) => {
     acc[familyId] = "".concat(config.cssPrefix, "-").concat(familyId);
     return acc;
   }, {});
-  L.forEach((familyId) => {
+  L2.forEach((familyId) => {
     if (values.includes(famProps[familyId]) || values.some((v$$1) => PREFIXES_FOR_FAMILY[familyId].includes(v$$1))) {
       family = familyId;
     }
@@ -1765,10 +2186,10 @@ function getFamilyId(values) {
 function getCanonicalPrefix(styleOrPrefix) {
   let params = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
   const {
-    family = s
+    family = s2
   } = params;
   const style = PREFIX_TO_STYLE[family][styleOrPrefix];
-  if (family === t && !styleOrPrefix) {
+  if (family === t2 && !styleOrPrefix) {
     return "fad";
   }
   const prefix = STYLE_TO_PREFIX[family][styleOrPrefix] || STYLE_TO_PREFIX[family][style];
@@ -1808,7 +2229,7 @@ function getCanonicalIcon(values) {
   const nonStyleOrFamilyClasses = sortedUniqueValues(values.filter((cls) => !Ia.includes(cls)));
   const faStyles = faStyleOrFamilyClasses.filter((cls) => {
     givenPrefix = cls;
-    return !P.includes(cls);
+    return !P2.includes(cls);
   });
   const [styleFromValues = null] = faStyles;
   const family = getFamilyId(faStyleOrFamilyClasses);
@@ -1849,10 +2270,10 @@ function applyShimAndAlias(skipLookups, givenPrefix, canonical) {
     iconName
   };
 }
-var newCanonicalFamilies = L.filter((familyId) => {
-  return familyId !== s || familyId !== t;
+var newCanonicalFamilies = L2.filter((familyId) => {
+  return familyId !== s2 || familyId !== t2;
 });
-var newCanonicalStyles = Object.keys(ga).filter((key) => key !== s).map((key) => Object.keys(ga[key])).flat();
+var newCanonicalStyles = Object.keys(ga).filter((key) => key !== s2).map((key) => Object.keys(ga[key])).flat();
 function getDefaultCanonicalPrefix(prefixOptions) {
   const {
     values,
@@ -1862,7 +2283,7 @@ function getDefaultCanonicalPrefix(prefixOptions) {
     styles: styles2 = {},
     config: config$$1 = {}
   } = prefixOptions;
-  const isDuotoneFamily = family === t;
+  const isDuotoneFamily = family === t2;
   const valuesHasDuotone = values.includes("fa-duotone") || values.includes("fad");
   const defaultFamilyIsDuotone = config$$1.familyDefault === "duotone";
   const canonicalPrefixIsDuotone = canonical.prefix === "fad" || canonical.prefix === "fa-duotone";
@@ -1897,7 +2318,7 @@ var Library = class {
     Object.keys(additions).forEach((key) => {
       this.definitions[key] = _objectSpread2(_objectSpread2({}, this.definitions[key] || {}), additions[key]);
       defineIcons(key, additions[key]);
-      const longPrefix = PREFIX_TO_LONG_STYLE[s][key];
+      const longPrefix = PREFIX_TO_LONG_STYLE[s2][key];
       if (longPrefix)
         defineIcons(longPrefix, additions[key]);
       build();
@@ -1941,9 +2362,9 @@ function registerPlugins(nextPlugins, _ref) {
   } = _ref;
   _plugins = nextPlugins;
   _hooks = {};
-  Object.keys(providers).forEach((k) => {
-    if (defaultProviderKeys.indexOf(k) === -1) {
-      delete providers[k];
+  Object.keys(providers).forEach((k2) => {
+    if (defaultProviderKeys.indexOf(k2) === -1) {
+      delete providers[k2];
     }
   });
   _plugins.forEach((plugin) => {
@@ -2110,7 +2531,7 @@ function domVariants(val, abstractCreator) {
   });
   Object.defineProperty(val, "html", {
     get: function() {
-      return val.abstract.map((a) => toHtml(a));
+      return val.abstract.map((a2) => toHtml(a2));
     }
   });
   Object.defineProperty(val, "node", {
@@ -2523,7 +2944,7 @@ var mutators = {
         node.setAttribute("class", splitClasses.toNode.join(" "));
       }
     }
-    const newInnerHTML = abstract.map((a) => toHtml(a)).join("\n");
+    const newInnerHTML = abstract.map((a2) => toHtml(a2)).join("\n");
     node.setAttribute(DATA_FA_I2SVG, "");
     node.innerHTML = newInnerHTML;
   }
@@ -2747,7 +3168,7 @@ function onTree(root) {
   const htmlClassList = DOCUMENT.documentElement.classList;
   const hclAdd = (suffix) => htmlClassList.add("".concat(HTML_CLASS_I2SVG_BASE_CLASS, "-").concat(suffix));
   const hclRemove = (suffix) => htmlClassList.remove("".concat(HTML_CLASS_I2SVG_BASE_CLASS, "-").concat(suffix));
-  const prefixes = config.autoFetchSvg ? getKnownPrefixes() : P.concat(Object.keys(styles$2));
+  const prefixes = config.autoFetchSvg ? getKnownPrefixes() : P2.concat(Object.keys(styles$2));
   if (!prefixes.includes("fa")) {
     prefixes.push("fa");
   }
@@ -2990,8 +3411,8 @@ var Layers = {
           });
           let children = [];
           assembler((args) => {
-            Array.isArray(args) ? args.map((a) => {
-              children = children.concat(a.abstract);
+            Array.isArray(args) ? args.map((a2) => {
+              children = children.concat(a2.abstract);
             }) : children = children.concat(args.abstract);
           });
           return [{
@@ -3296,8 +3717,8 @@ var parseTransformString = (transformString) => {
     flipY: false,
     rotate: 0
   };
-  return transformString.toLowerCase().split(" ").reduce((acc, n) => {
-    const parts = n.toLowerCase().split("-");
+  return transformString.toLowerCase().split(" ").reduce((acc, n2) => {
+    const parts = n2.toLowerCase().split("-");
     const first = parts[0];
     let rest = parts.slice(1).join("-");
     if (first && rest === "h") {
@@ -3425,7 +3846,7 @@ var Masks = {
     return {
       parseNodeAttributes(accumulator, node) {
         const maskData = node.getAttribute("data-fa-mask");
-        const mask = !maskData ? emptyCanonicalIcon() : getCanonicalIcon(maskData.split(" ").map((i) => i.trim()));
+        const mask = !maskData ? emptyCanonicalIcon() : getCanonicalIcon(maskData.split(" ").map((i3) => i3.trim()));
         if (!mask.prefix) {
           mask.prefix = getDefaultUsablePrefix();
         }
@@ -3648,7 +4069,7 @@ var faDesktop = {
   icon: [576, 512, [128421, 61704, "desktop-alt"], "f390", "M64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l176 0-10.7 32L160 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-69.3 0L336 416l176 0c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0zM512 64l0 224L64 288 64 64l448 0z"]
 };
 
-// src/components/PageHeader.js
+// src/components/PageHeader.jsx
 var PageHeader = class extends AppElement {
   #default = {
     brand: {
@@ -3735,17 +4156,6 @@ var PageHeader = class extends AppElement {
       }
     }
   }
-  #getButtons() {
-    let lngButtons = ``;
-    Object.entries(this.state.i18n.lang).forEach(([key, value]) => {
-      let focus = ["button"];
-      if (key === this.state.context.lang) {
-        focus.push("is-focused");
-      }
-      lngButtons += `<button id="btn-${key}" ${this.getClasses(focus, this.state.i18n?.classList)}">${value}</button>`;
-    });
-    return lngButtons;
-  }
   addEvents() {
     let themes = document.querySelector("#themes");
     themes.addEventListener("click", this);
@@ -3766,62 +4176,67 @@ var PageHeader = class extends AppElement {
       case "light":
         document.documentElement.setAttribute("data-theme", "light");
         return this.#sunIcon;
-        break;
       case "dark":
         document.documentElement.setAttribute("data-theme", "dark");
         return this.#moonIcon;
-        break;
       default:
         document.documentElement.removeAttribute("data-theme");
         return this.#desktopIcon;
-        break;
     }
   }
   render() {
-    this.innerHTML = /* html */
-    `
-            <header>
-            <nav ${this.getClasses(["navbar"], this.state.classList)} role="navigation" aria-label="main navigation">
-                <div class="navbar-brand">
-                <img class="navbar-item"  src="${this.state.context?.theme === "light" ? this.state.brand?.src : this.state.brand?.srcDark === void 0 ? this.state.brand?.src : this.state.brand?.srcDark}" width="160" height="40">
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-                </div>
-                <div class="navbar-menu">
-                <div class="navbar-start">
-                <div class="navbar-item has-dropdown">
-                    <a id="themes" class="navbar-link is-arrowless">
-                        ${this.state.theme?.text[this.state.context?.lang]} ${this.#setTheme()}
-                    </a>
-                    <div class="navbar-dropdown">                   
-                        <a id="light-theme" class="navbar-item">
-                            ${this.#sunIcon} ${this.state.themeValues.light.text[this.state.context?.lang]}
-                        </a>
-                        <a id="dark-theme" class="navbar-item">
-                            ${this.#moonIcon} ${this.state.themeValues.dark.text[this.state.context?.lang]}
-                        </a>
-                        <a id="system-theme" class="navbar-item">
-                            ${this.#desktopIcon} ${this.state.themeValues.system.text[this.state.context?.lang]}
-                        </a>
-                    </div>
-                </div>
-                </div>
-                ${this.state.i18n === void 0 ? "" : `
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons are-small">
-                            ${this.#getButtons()}
-                        </div>
-                    </div>
-                </div>
-                `}
-                </div>
-            </nav>
-        </header>
-        `;
+    let logo = this.state.context?.theme === "light" ? this.state.brand?.src : this.state.brand?.srcDark === void 0 ? this.state.brand?.src : this.state.brand?.srcDark;
+    R(
+      /* @__PURE__ */ u2("header", { children: /* @__PURE__ */ u2("nav", { class: this.getClassNames(["navbar"], this.state.classList), role: "navigation", "aria-label": "main navigation", children: [
+        /* @__PURE__ */ u2("div", { class: "navbar-brand", children: [
+          /* @__PURE__ */ u2("img", { class: "navbar-item", src: logo, width: "160", height: "40" }),
+          /* @__PURE__ */ u2("a", { role: "button", class: "navbar-burger", "aria-label": "menu", "aria-expanded": "false", children: [
+            /* @__PURE__ */ u2("span", { "aria-hidden": "true" }),
+            /* @__PURE__ */ u2("span", { "aria-hidden": "true" }),
+            /* @__PURE__ */ u2("span", { "aria-hidden": "true" })
+          ] })
+        ] }),
+        /* @__PURE__ */ u2("div", { class: "navbar-menu", children: [
+          /* @__PURE__ */ u2("div", { class: "navbar-start", children: /* @__PURE__ */ u2("div", { class: "navbar-item has-dropdown", children: [
+            /* @__PURE__ */ u2("a", { id: "themes", class: "navbar-link is-arrowless", children: [
+              this.state.theme?.text[this.state.context?.lang],
+              " ",
+              /* @__PURE__ */ u2("span", { dangerouslySetInnerHTML: { __html: this.#setTheme() } })
+            ] }),
+            /* @__PURE__ */ u2("div", { class: "navbar-dropdown", children: [
+              /* @__PURE__ */ u2("a", { id: "light-theme", class: "navbar-item", children: [
+                /* @__PURE__ */ u2("span", { dangerouslySetInnerHTML: { __html: this.#sunIcon } }),
+                " ",
+                this.state.themeValues.light.text[this.state.context?.lang]
+              ] }),
+              /* @__PURE__ */ u2("a", { id: "dark-theme", class: "navbar-item", children: [
+                /* @__PURE__ */ u2("span", { dangerouslySetInnerHTML: { __html: this.#moonIcon } }),
+                " ",
+                this.state.themeValues.dark.text[this.state.context?.lang]
+              ] }),
+              /* @__PURE__ */ u2("a", { id: "system-theme", class: "navbar-item", children: [
+                /* @__PURE__ */ u2("span", { dangerouslySetInnerHTML: { __html: this.#desktopIcon } }),
+                " ",
+                this.state.themeValues.system.text[this.state.context?.lang]
+              ] })
+            ] })
+          ] }) }),
+          this.state.i18n === void 0 ? null : /* @__PURE__ */ u2("div", { class: "navbar-end", children: /* @__PURE__ */ u2("div", { class: "navbar-item", children: /* @__PURE__ */ u2("div", { class: "buttons are-small", children: Object.entries(this.state.i18n.lang).map(([key, value]) => /* @__PURE__ */ u2(
+            "button",
+            {
+              id: `btn-${key}`,
+              class: this.getClassNames(
+                key === this.state.context.lang ? ["button", "is-focused"] : ["button"],
+                this.state.i18n?.classList
+              ),
+              children: value
+            },
+            key
+          )) }) }) })
+        ] })
+      ] }) }),
+      this
+    );
     this.addEvents();
     let burger = this.querySelector(".navbar-burger");
     let menu = this.querySelector(".navbar-menu");

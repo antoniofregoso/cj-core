@@ -1,3 +1,5 @@
+import { h } from "preact";
+
 /**
  * Core element for creating funnel components
  */
@@ -105,7 +107,25 @@ export class AppElement extends HTMLElement {
     }
 
     /**
-     * 
+     * Same as setAnimation but returns a plain object of data- attributes
+     * to spread onto a JSX element instead of a literal HTML string
+     *
+     * @param {Object} props Attributes to define animation
+     * @returns {Object}
+     */
+    getAnimationProps(props){
+        if (props===undefined||props===null){
+            return {};
+        }
+        let attrs = { 'data-animation': props.effect };
+        if (props.delay!=undefined) attrs['data-delay'] = props.delay;
+        if (props.speed!=undefined) attrs['data-speed'] = props.speed;
+        if (props.repeat!=undefined) attrs['data-repeat'] = props.repeat;
+        return attrs;
+    }
+
+    /**
+     *
      */
     cleanValue(prop){
         return prop!=undefined?prop:'';
@@ -141,7 +161,20 @@ export class AppElement extends HTMLElement {
     }
     
     /**
-     * 
+     * Add the additional classes sent to the component props, as a plain
+     * space separated string suitable for JSX's `class` attribute
+     *
+     * @param {string} defaultClass
+     * @param {string} optionalClasses
+     * @returns {string|undefined}
+     */
+    getClassNames(defaultClass=[], optionalClasses){
+        let resultClasses = optionalClasses===undefined?defaultClass:[...defaultClass, ...optionalClasses];
+        return resultClasses.length>0?resultClasses.join(" "):undefined;
+    }
+
+    /**
+     *
      * @returns {string} The styles needed to add the background image
      */
     getBackground(){
@@ -162,6 +195,26 @@ export class AppElement extends HTMLElement {
     }
 
     /**
+     * Same as getBackground but returns the bare CSS text (no `style="..."`
+     * wrapper) suitable for JSX's `style` attribute
+     *
+     * @returns {string|undefined}
+     */
+    getBackgroundStyle(){
+        let style = '';
+        if (this.state.backgroundImage?.url!=undefined) {
+            style = `background-image: url('${this.state.backgroundImage.url}'); background-repeat: no-repeat; background-position: center; background-size: cover;`;
+            if (this.state.backgroundImage?.fixed){
+                style = `${style} background-attachment: fixed;`
+            }
+            if (this.state.backgroundImage?.filter){
+                style = `${style} filter: ${this.state.backgroundImage?.filter};`
+            }
+        }
+        return style || undefined;
+    }
+
+    /**
    * Generate caption, title and subtitle of the component
    */
     getTitles(){
@@ -179,7 +232,21 @@ export class AppElement extends HTMLElement {
         }
         return titles;
     }
-    
+
+    /**
+     * Same as getTitles but returns a Preact vnode tree instead of an HTML
+     * string, for use directly inside a component's JSX render()
+     */
+    getTitlesJSX(){
+        if (this.state===undefined) return null;
+        const lang = this.state.context.lang;
+        return h('div', { class: 'content' }, [
+            this.state.caption?.text[lang]!=undefined ? h('h2', { class: this.getClassNames(["subtitle"], this.state.caption?.classList), ...this.getAnimationProps(this.state.caption?.animation) }, this.state.caption.text[lang]) : null,
+            this.state.title?.text[lang]!=undefined ? h('h1', { class: this.getClassNames([], this.state.title?.classList), ...this.getAnimationProps(this.state.title?.animation) }, this.state.title.text[lang]) : null,
+            this.state.subtitle?.text[lang]!=undefined ? h('h2', { class: this.getClassNames([], this.state.subtitle?.classList), ...this.getAnimationProps(this.state.subtitle?.animation) }, this.state.subtitle.text[lang]) : null,
+        ]);
+    }
+
     handleEvent(event){
         if (event.type === "click") {
             this.eventName = this.state.buttons?.eventName ?? this.state.eventName ?? this.eventName; 
@@ -232,6 +299,29 @@ export class AppElement extends HTMLElement {
             `
            return buttons;
         }else return '';
+    }
+
+    /**
+     * Same as #getButtons but returns an array of Preact vnodes
+     * @param {Object} props
+     */
+    #getButtonsJSX(props){
+        if (props===undefined) return [];
+        return props.map(el => h(
+            el.href!=undefined ? 'a' : 'button',
+            { key: el.id, id: el.id, class: this.getClassNames(['button'], el.classList), href: el.href },
+            el?.text[this.state.context.lang]
+        ));
+    }
+
+    /**
+     * Same as buttonsRender but returns a Preact vnode tree instead of an
+     * HTML string, for use directly inside a component's JSX render()
+     * @param {Object} props
+     */
+    buttonsRenderJSX(props){
+        if (props===undefined) return null;
+        return h('p', { class: this.getClassNames(['buttons', 'mt-4'], props.classList) }, this.#getButtonsJSX(props.buttons));
     }
 
     addCleanup(callback){
